@@ -1,4 +1,4 @@
-hotmusicm
+Media Store Project
 =========
 
-Hot music management
+Create simple media store system for NMS.
