@@ -36,7 +36,7 @@ public class Artist implements Serializable {
     )
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "sequenceTb")
     @Column(name = "ARTISTID")
-    private Long artistId; 
+    private Long artistId;
     
     @NotNull
     @Size(max = 150)
@@ -103,4 +103,10 @@ public class Artist implements Serializable {
         hash = 29 * hash + Objects.hashCode(this.artistId);
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    
 }

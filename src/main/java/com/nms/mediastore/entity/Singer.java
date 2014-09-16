@@ -103,4 +103,9 @@ public class Singer implements Serializable {
         hash = 29 * hash + Objects.hashCode(this.singerId);
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

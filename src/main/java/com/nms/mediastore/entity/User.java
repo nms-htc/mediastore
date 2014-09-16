@@ -19,6 +19,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -27,11 +29,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author CuongNT
- */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "User.findByUP", query = "SELECT u FROM User u WHERE u.username = :username and u.password = :password"),
+    @NamedQuery(name = "User.findByU", query = "SELECT u FROM User u WHERE u.username = :username")
+})
 @Table(name = "MS_USER")
 @XmlRootElement
 public class User implements Serializable {
@@ -40,57 +42,60 @@ public class User implements Serializable {
 
     @Id
     @TableGenerator(
-            name = "sequenceTb", 
-            table = "MS_SEQUENCE", 
-            pkColumnName = "NAME", 
-            pkColumnValue = "VALUE", 
+            name = "sequenceTb",
+            table = "MS_SEQUENCE",
+            pkColumnName = "NAME",
+            pkColumnValue = "VALUE",
             valueColumnName = "USER_SQ"
     )
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "sequenceTb")
     @Column(name = "USERID")
     private Long userId;
-    
+
     @NotNull
     @Size(max = 75)
     @Column(name = "USERNAME", unique = true)
     private String username;
-    
+
     @NotNull
     @Column(name = "FULLNAME")
     @Size(max = 100)
     private String fullname;
-    
+
     @NotNull
     @Size(max = 150)
     @Column(name = "PASSWORD")
     private String password;
-    
+
     @NotNull
     @Size(max = 150)
     @Column(name = "SALT")
     private String salt;
-    
+
     @NotNull
     @Size(max = 200)
     @Column(name = "EMAIL")
     private String email;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATEDATE")
     private Date createDate;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "MODIFIEDDATE")
     private Date modifiedDate;
-    
-    
+
     @ElementCollection(targetClass = Group.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "MS_USERGROUP", joinColumns = {@JoinColumn(name = "USERID")})
+    @CollectionTable(name = "MS_USERGROUP", joinColumns = {
+        @JoinColumn(name = "USERID")})
     @Column(name = "GROUPNAME")
     private Set<Group> groups;
 
     public User() {
+        Date now = new Date();
+        createDate = now;
+        modifiedDate = now;
     }
 
     public Long getUserId() {
@@ -165,7 +170,6 @@ public class User implements Serializable {
         this.groups = groups;
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -184,4 +188,5 @@ public class User implements Serializable {
         hash = 89 * hash + (int) (this.userId ^ (this.userId >>> 32));
         return hash;
     }
+
 }

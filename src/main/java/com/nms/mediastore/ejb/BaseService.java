@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.nms.mediastore.ejb;
 
 import java.io.Serializable;
@@ -11,10 +6,12 @@ import java.util.Map;
 import org.primefaces.model.SortOrder;
 
 /**
- *
- * @author CuongNT
- * @param <T>
- * @param <Id>
+ * Basic functionalities of ejb beans.
+ * @author Nguyen Trong Cuong (cuongnt1987@gmail.com)
+ * @since 16/09/2014
+ * @version 1.0
+ * @param <T> Entity Class Type
+ * @param <Id> Entity's Id Class Type
  */
 public interface BaseService<T, Id> extends Serializable {
     public T find(Id id);

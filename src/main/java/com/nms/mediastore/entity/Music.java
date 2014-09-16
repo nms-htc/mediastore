@@ -87,6 +87,9 @@ public class Music implements Serializable {
     private Set<Topic> topics;
 
     public Music() {
+        Date now = new Date();
+        createDate = now;
+        modifiedDate = now;
     }
 
     public Long getMusicId() {
@@ -168,6 +171,14 @@ public class Music implements Serializable {
     public void setTopics(Set<Topic> topics) {
         this.topics = topics;
     }
+    
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -188,11 +199,9 @@ public class Music implements Serializable {
         return hash;
     }
 
-    public String getImageUri() {
-        return imageUri;
+    @Override
+    public String toString() {
+        return title;
     }
-
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
-    }
+    
 }

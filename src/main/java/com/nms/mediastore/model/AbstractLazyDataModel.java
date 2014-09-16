@@ -17,17 +17,21 @@ import org.primefaces.model.SortOrder;
  * @param <T>
  * @param <Id>
  */
-public abstract class AbstractLazyModel<T, Id> extends LazyDataModel<T> {
+public abstract class AbstractLazyDataModel<T, Id> extends LazyDataModel<T> {
 
     private static final long serialVersionUID = -1137464869996262401L;
 
-    protected abstract BaseService<T, Id> getBaseService();
+    protected final BaseService<T, Id> baseService;
+
+    public AbstractLazyDataModel(BaseService<T, Id> baseService) {
+        this.baseService = baseService;
+    }
 
     protected abstract Id parserRowKey(String rowKey);
 
     @Override
     public T getRowData(String rowKey) {
-        return getBaseService().find(parserRowKey(rowKey));
+        return baseService.find(parserRowKey(rowKey));
     }
 
     @Override
@@ -35,7 +39,7 @@ public abstract class AbstractLazyModel<T, Id> extends LazyDataModel<T> {
 
     @Override
     public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        this.setRowCount(getBaseService().countForPFDatatable(filters));
-        return getBaseService().searchForPFDatatable(first, first, sortField, sortOrder, filters);
+        this.setRowCount(baseService.countForPFDatatable(filters));
+        return baseService.searchForPFDatatable(first, first, sortField, sortOrder, filters);
     }
 }

@@ -77,6 +77,14 @@ public class Topic implements Serializable {
         this.description = description;
     }
 
+    public Long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -86,13 +94,19 @@ public class Topic implements Serializable {
             return false;
         }
         final Topic other = (Topic) obj;
-        return Objects.equals(this.topicId, other.topicId);
+        return Objects.equals(this.getTopicId(), other.getTopicId());
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.topicId);
+        hash = 29 * hash + Objects.hashCode(this.getTopicId());
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }
