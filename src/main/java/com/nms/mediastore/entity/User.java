@@ -42,13 +42,13 @@ public class User implements Serializable {
 
     @Id
     @TableGenerator(
-            name = "sequenceTb",
+            name = "userSQ",
             table = "MS_SEQUENCE",
             pkColumnName = "NAME",
             pkColumnValue = "VALUE",
             valueColumnName = "USER_SQ"
     )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "sequenceTb")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "userSQ")
     @Column(name = "USERID")
     private Long userId;
 

@@ -28,13 +28,13 @@ public class Topic implements Serializable {
 
     @Id
     @TableGenerator(
-            name = "sequenceTb",
+            name = "topicSQ",
             table = "MS_SEQUENCE",
             pkColumnName = "NAME",
             pkColumnValue = "VALUE",
             valueColumnName = "TOPIC_SQ"
     )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "sequenceTb")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "topicSQ")
     @Column(name = "TOPICID")
     private Long topicId;
 

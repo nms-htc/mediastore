@@ -35,13 +35,13 @@ public class Music implements Serializable {
 
     @Id
     @TableGenerator(
-            name = "sequenceTb",
+            name = "musicSQ",
             table = "MS_SEQUENCE",
             pkColumnName = "NAME",
             pkColumnValue = "VALUE",
             valueColumnName = "MUSIC_SQ"
     )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "sequenceTb")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "musicSQ")
     @Column(name = "MUSICID")
     private Long musicId;
 

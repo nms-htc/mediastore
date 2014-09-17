@@ -21,7 +21,7 @@ import org.primefaces.model.SortOrder;
  * @param <T> Entity Class Type
  * @param <Id> Entity's Id Class Type
  */
-abstract class AbstractServiceBean<T, Id> implements BaseService<T, Id> {
+public abstract class AbstractServiceBean<T, Id> implements BaseService<T, Id> {
 
     private static final long serialVersionUID = 8144780304797677034L;
 

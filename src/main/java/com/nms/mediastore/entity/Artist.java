@@ -28,13 +28,13 @@ public class Artist implements Serializable {
     
     @Id
     @TableGenerator(
-            name = "sequenceTb", 
+            name = "artistSQ", 
             table = "MS_SEQUENCE", 
             pkColumnName = "NAME", 
             pkColumnValue = "VALUE", 
             valueColumnName = "ARTIST_SQ"
     )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "sequenceTb")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "artistSQ")
     @Column(name = "ARTISTID")
     private Long artistId;
     

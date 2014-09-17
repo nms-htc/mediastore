@@ -2,6 +2,7 @@ package com.nms.mediastore.web.controller;
 
 import com.nms.mediastore.ejb.BaseService;
 import com.nms.mediastore.ejb.UserFacadeLocalBean;
+import com.nms.mediastore.ejb.impl.UserFacadeBean;
 import com.nms.mediastore.entity.User;
 import com.nms.mediastore.model.UserLazyDataModel;
 import javax.ejb.EJB;
@@ -16,7 +17,7 @@ public class UserBean extends AbstractManagedBean<User, Long> {
     private static final long serialVersionUID = -1150645605262032055L;
     
     @EJB
-    private UserFacadeLocalBean service;
+    private UserFacadeBean service;
 
     public UserBean() {
     }
@@ -34,5 +35,9 @@ public class UserBean extends AbstractManagedBean<User, Long> {
     @Override
     protected BaseService<User, Long> getBaseService() {
         return service;
+    }
+    
+    public String getNumberAdmin() {
+        return String.valueOf(service.findAdministrators());
     }
 }

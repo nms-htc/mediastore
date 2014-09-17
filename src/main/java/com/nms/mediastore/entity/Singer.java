@@ -28,13 +28,13 @@ public class Singer implements Serializable {
 
     @Id
     @TableGenerator(
-            name = "sequenceTb",
+            name = "singerSQ",
             table = "MS_SEQUENCE",
             pkColumnName = "NAME",
             pkColumnValue = "VALUE",
             valueColumnName = "SINGER_SQ"
     )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "sequenceTb")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "singerSQ")
     @Column(name = "SINGERID")
     private Long singerId;
 

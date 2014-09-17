@@ -15,7 +15,7 @@ import org.primefaces.model.LazyDataModel;
  * @param <T> Entity Class Type
  * @param <Id> Entity's Id Class Type
  */
-abstract class AbstractManagedBean<T, Id> implements Serializable {
+public abstract class AbstractManagedBean<T, Id> implements Serializable {
 
     private static final long serialVersionUID = 8024568564171342875L;
     private static final String REQUEST_SUCCESS_MESSAGE = "your-request-has-been-successfully-implemented";

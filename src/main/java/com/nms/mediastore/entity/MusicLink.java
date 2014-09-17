@@ -32,13 +32,13 @@ public class MusicLink implements Serializable {
 
     @Id
     @TableGenerator(
-            name = "sequenceTb",
+            name = "linkSQ",
             table = "MS_SEQUENCE",
             pkColumnName = "NAME",
             pkColumnValue = "VALUE",
             valueColumnName = "MUSICLINK_SQ"
     )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "sequenceTb")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "linkSQ")
     @Column(name = "LINKID")
     private Long linkId;
     @ManyToOne
