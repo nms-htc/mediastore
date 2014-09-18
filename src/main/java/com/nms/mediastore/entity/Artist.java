@@ -27,14 +27,7 @@ public class Artist implements Serializable {
     private static final long serialVersionUID = -8825686824596189837L;
     
     @Id
-    @TableGenerator(
-            name = "artistSQ", 
-            table = "MS_SEQUENCE", 
-            pkColumnName = "NAME", 
-            pkColumnValue = "VALUE", 
-            valueColumnName = "ARTIST_SQ"
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "artistSQ")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ARTISTID")
     private Long artistId;
     

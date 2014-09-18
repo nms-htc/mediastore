@@ -31,14 +31,7 @@ public class MusicLink implements Serializable {
     private static final long serialVersionUID = -7153926835169422111L;
 
     @Id
-    @TableGenerator(
-            name = "linkSQ",
-            table = "MS_SEQUENCE",
-            pkColumnName = "NAME",
-            pkColumnValue = "VALUE",
-            valueColumnName = "MUSICLINK_SQ"
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "linkSQ")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "LINKID")
     private Long linkId;
     @ManyToOne

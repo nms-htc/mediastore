@@ -1,10 +1,9 @@
-package com.nms.mediastore.ejb;
+package com.nms.mediastore.service;
 
 import com.nms.mediastore.entity.User;
 import java.util.List;
-import javax.ejb.Local;
 
-public interface UserFacadeLocalBean extends BaseService<User, Long> {
+public interface UserService extends BaseService<User, Long> {
     
     public User findByUP(String username, String password);
     

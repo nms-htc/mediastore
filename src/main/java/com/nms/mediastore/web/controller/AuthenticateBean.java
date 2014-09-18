@@ -1,6 +1,6 @@
 package com.nms.mediastore.web.controller;
 
-import com.nms.mediastore.ejb.UserFacadeLocalBean;
+import com.nms.mediastore.service.UserService;
 import com.nms.mediastore.entity.User;
 import com.nms.mediastore.util.MessageUtil;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class AuthenticateBean implements Serializable {
     private String originalURL;
 
     @EJB
-    private UserFacadeLocalBean service;
+    private UserService service;
 
     public AuthenticateBean() {
     }

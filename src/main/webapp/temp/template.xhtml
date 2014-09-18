@@ -32,8 +32,8 @@
     <h:body>
         <p:growl id="growl" globalOnly="true"/>
 
-        <p:ajaxStatus onstart="PF('statusDialog').show()" 
-                      onsuccess="PF('statusDialog').hide()" />
+<!--        <p:ajaxStatus onstart="PF('statusDialog').show()" 
+                      onsuccess="PF('statusDialog').hide()" />-->
 
         <p:dialog id="statusDialog" 
                   widgetVar="statusDialog" 
@@ -56,10 +56,15 @@
 
         <div id="wrapper">
             <div id="header">
-                <ui:include src="/inc/header.xhtml"/>
+                <ui:include src="/inc/header.xhtml" />
             </div><!-- end div#header -->
             <div id="mainNav">
-                <ui:include src="/inc/navigation.xhtml"/>
+                
+                <h:panelGroup id="navBar">
+                    <ui:include src="/inc/navigation.xhtml" />
+                </h:panelGroup>
+                
+                <p:sticky target="navBar"/>
             </div><!-- end div#mainNav -->
             <div id="mainContent">
                 <!-- main content placeholder -->

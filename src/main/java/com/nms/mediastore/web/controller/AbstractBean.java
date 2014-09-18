@@ -1,6 +1,6 @@
 package com.nms.mediastore.web.controller;
 
-import com.nms.mediastore.ejb.BaseService;
+import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.util.MessageUtil;
 import java.io.Serializable;
 import org.primefaces.model.LazyDataModel;
@@ -15,7 +15,7 @@ import org.primefaces.model.LazyDataModel;
  * @param <T> Entity Class Type
  * @param <Id> Entity's Id Class Type
  */
-public abstract class AbstractManagedBean<T, Id> implements Serializable {
+public abstract class AbstractBean<T, Id> implements Serializable {
 
     private static final long serialVersionUID = 8024568564171342875L;
     private static final String REQUEST_SUCCESS_MESSAGE = "your-request-has-been-successfully-implemented";
@@ -24,7 +24,7 @@ public abstract class AbstractManagedBean<T, Id> implements Serializable {
     protected T current;
     protected LazyDataModel<T> model;
 
-    public AbstractManagedBean() {
+    public AbstractBean() {
     }
 
     /**

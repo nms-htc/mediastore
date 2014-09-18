@@ -1,8 +1,7 @@
 package com.nms.mediastore.web.controller;
 
-import com.nms.mediastore.ejb.BaseService;
-import com.nms.mediastore.ejb.UserFacadeLocalBean;
-import com.nms.mediastore.ejb.impl.UserFacadeBean;
+import com.nms.mediastore.service.BaseService;
+import com.nms.mediastore.service.UserService;
 import com.nms.mediastore.entity.User;
 import com.nms.mediastore.model.UserLazyDataModel;
 import javax.ejb.EJB;
@@ -12,12 +11,12 @@ import org.primefaces.model.LazyDataModel;
 
 @Named
 @SessionScoped
-public class UserBean extends AbstractManagedBean<User, Long> {
+public class UserBean extends AbstractBean<User, Long> {
 
     private static final long serialVersionUID = -1150645605262032055L;
     
     @EJB
-    private UserFacadeBean service;
+    private UserService service;
 
     public UserBean() {
     }

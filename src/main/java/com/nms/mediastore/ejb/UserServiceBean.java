@@ -1,6 +1,6 @@
-package com.nms.mediastore.ejb.impl;
+package com.nms.mediastore.ejb;
 
-import com.nms.mediastore.ejb.UserFacadeLocalBean;
+import com.nms.mediastore.service.UserService;
 import com.nms.mediastore.entity.Group;
 import com.nms.mediastore.entity.User;
 import com.nms.mediastore.entity.User_;
@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Local;
@@ -29,14 +31,15 @@ import javax.xml.bind.DatatypeConverter;
 import org.primefaces.model.SortOrder;
 
 @Stateless
-public class UserFacadeBean extends AbstractServiceBean<User, Long> implements UserFacadeLocalBean {
+public class UserServiceBean extends AbstractService<User, Long> implements UserService {
 
     private static final long serialVersionUID = 459455862821896874L;
+    private static final Logger LOGGER = Logger.getLogger(UserServiceBean.class.getName());
 
     @PersistenceContext
     private EntityManager em;
 
-    public UserFacadeBean() {
+    public UserServiceBean() {
         super(User.class);
     }
 
@@ -81,10 +84,20 @@ public class UserFacadeBean extends AbstractServiceBean<User, Long> implements U
         List<Predicate> predicates = new ArrayList<>();
 
         for (Map.Entry<String, Object> entry : filters.entrySet()) {
-//            switch (entry.getKey()) {
-//                //case User_.email.getName():
-//                    
-//            }
+            switch (entry.getKey()) {
+                case "username":
+                    predicates.add(cb.like(cb.upper(root.get(User_.username)), "%" + entry.getValue().toString().toUpperCase() + "%"));
+                    break;
+                case "fullname":
+                    predicates.add(cb.like(cb.upper(root.get(User_.fullname)), "%" + entry.getValue().toString().toUpperCase() + "%"));
+                    break;
+                case "email":
+                    predicates.add(cb.like(cb.upper(root.get(User_.email)), "%" + entry.getValue().toString().toUpperCase() + "%"));
+                    break;
+                case "groups":
+                    
+                    break;
+            }
         }
 
         return predicates;
@@ -147,7 +160,7 @@ public class UserFacadeBean extends AbstractServiceBean<User, Long> implements U
             TypedQuery<User> q = em.createQuery(cq);
             admins = q.getResultList();
         } catch (Exception e) {
-
+            LOGGER.log(Level.SEVERE, "[UserServiceBean] findAdministrators()", e);
         }
 
         return admins;

@@ -1,6 +1,6 @@
-package com.nms.mediastore.ejb.impl;
+package com.nms.mediastore.ejb;
 
-import com.nms.mediastore.ejb.TopicFacadeLocalBean;
+import com.nms.mediastore.service.TopicService;
 import com.nms.mediastore.entity.Topic;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +14,14 @@ import javax.persistence.criteria.Root;
 import org.primefaces.model.SortOrder;
 
 @Stateless
-public class TopicFacadeBeanImpl extends AbstractServiceBean<Topic, Long> implements TopicFacadeLocalBean {
+public class TopicServiceBean extends AbstractService<Topic, Long> implements TopicService {
 
     private static final long serialVersionUID = -3895208240070641207L;
     
     @PersistenceContext
     private EntityManager em;
 
-    public TopicFacadeBeanImpl() {
+    public TopicServiceBean() {
         super(Topic.class);
     }
 

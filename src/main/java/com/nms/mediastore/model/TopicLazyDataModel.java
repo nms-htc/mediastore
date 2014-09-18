@@ -5,7 +5,7 @@
  */
 package com.nms.mediastore.model;
 
-import com.nms.mediastore.ejb.BaseService;
+import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.entity.Topic;
 
 public class TopicLazyDataModel extends AbstractLazyDataModel<Topic, Long> {

@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nms.mediastore.ejb;
+package com.nms.mediastore.service;
 
 import java.io.Serializable;
-import javax.ejb.Local;
 
-@Local
 public interface ApplicationConfig extends Serializable {
 
 }

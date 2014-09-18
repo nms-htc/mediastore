@@ -27,14 +27,7 @@ public class Singer implements Serializable {
     private static final long serialVersionUID = 3052122354694036724L;
 
     @Id
-    @TableGenerator(
-            name = "singerSQ",
-            table = "MS_SEQUENCE",
-            pkColumnName = "NAME",
-            pkColumnValue = "VALUE",
-            valueColumnName = "SINGER_SQ"
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "singerSQ")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "SINGERID")
     private Long singerId;
 

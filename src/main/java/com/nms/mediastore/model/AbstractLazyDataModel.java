@@ -5,7 +5,7 @@
  */
 package com.nms.mediastore.model;
 
-import com.nms.mediastore.ejb.BaseService;
+import com.nms.mediastore.service.BaseService;
 import java.util.List;
 import java.util.Map;
 import org.primefaces.model.LazyDataModel;

@@ -1,6 +1,6 @@
 package com.nms.mediastore.web.convertor;
 
-import com.nms.mediastore.ejb.BaseService;
+import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.util.JsfUtil;
 import java.lang.reflect.ParameterizedType;
 import javax.faces.component.UIComponent;

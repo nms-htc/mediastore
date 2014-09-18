@@ -5,8 +5,8 @@
  */
 package com.nms.mediastore.web.convertor;
 
-import com.nms.mediastore.ejb.ArtistFacadeLocalBean;
-import com.nms.mediastore.ejb.BaseService;
+import com.nms.mediastore.service.ArtistService;
+import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.entity.Artist;
 import javax.ejb.EJB;
 import javax.faces.convert.FacesConverter;
@@ -15,7 +15,7 @@ import javax.faces.convert.FacesConverter;
 public class ArtistConvertor extends AbstractEntityConvertor<Artist, Long> {
     
     @EJB
-    private ArtistFacadeLocalBean service;
+    private ArtistService service;
 
     @Override
     protected BaseService<Artist, Long> getBaseService() {

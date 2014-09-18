@@ -1,7 +1,7 @@
-package com.nms.mediastore.ejb.impl;
+package com.nms.mediastore.ejb;
 
-import com.nms.mediastore.ejb.MusicFacadeLocalBean;
-import com.nms.mediastore.entity.Music;
+import com.nms.mediastore.service.SingerService;
+import com.nms.mediastore.entity.Singer;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
@@ -14,15 +14,15 @@ import javax.persistence.criteria.Root;
 import org.primefaces.model.SortOrder;
 
 @Stateless
-public class MusicFacadeBeanImpl extends AbstractServiceBean<Music, Long> implements MusicFacadeLocalBean {
+public class SingerServiceBean extends AbstractService<Singer, Long> implements SingerService {
 
-    private static final long serialVersionUID = -383721771132454218L;
+    private static final long serialVersionUID = 3818354189108798555L;
 
     @PersistenceContext
     private EntityManager em;
 
-    public MusicFacadeBeanImpl() {
-        super(Music.class);
+    public SingerServiceBean() {
+        super(Singer.class);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class MusicFacadeBeanImpl extends AbstractServiceBean<Music, Long> implem
     }
 
     @Override
-    protected List<Predicate> buildCondition(Map<String, Object> filters, Root<Music> root, CriteriaBuilder cb) {
+    protected List<Predicate> buildCondition(Map<String, Object> filters, Root<Singer> root, CriteriaBuilder cb) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -39,4 +39,5 @@ public class MusicFacadeBeanImpl extends AbstractServiceBean<Music, Long> implem
     protected Order buildOrder(String sortField, SortOrder sortOrder, CriteriaBuilder cb) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

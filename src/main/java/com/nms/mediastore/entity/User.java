@@ -41,14 +41,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 6010197496803589311L;
 
     @Id
-    @TableGenerator(
-            name = "userSQ",
-            table = "MS_SEQUENCE",
-            pkColumnName = "NAME",
-            pkColumnValue = "VALUE",
-            valueColumnName = "USER_SQ"
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "userSQ")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USERID")
     private Long userId;
 
@@ -67,7 +60,6 @@ public class User implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
-    @NotNull
     @Size(max = 150)
     @Column(name = "SALT")
     private String salt;

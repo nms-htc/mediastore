@@ -34,14 +34,7 @@ public class Music implements Serializable {
     private static final long serialVersionUID = 3721867941446196307L;
 
     @Id
-    @TableGenerator(
-            name = "musicSQ",
-            table = "MS_SEQUENCE",
-            pkColumnName = "NAME",
-            pkColumnValue = "VALUE",
-            valueColumnName = "MUSIC_SQ"
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "musicSQ")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MUSICID")
     private Long musicId;
 

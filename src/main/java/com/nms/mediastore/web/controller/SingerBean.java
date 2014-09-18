@@ -1,7 +1,7 @@
 package com.nms.mediastore.web.controller;
 
-import com.nms.mediastore.ejb.BaseService;
-import com.nms.mediastore.ejb.SingerFacadeLocalBean;
+import com.nms.mediastore.service.BaseService;
+import com.nms.mediastore.service.SingerService;
 import com.nms.mediastore.entity.Singer;
 import com.nms.mediastore.model.SingerLazyDataModel;
 import javax.ejb.EJB;
@@ -11,12 +11,12 @@ import org.primefaces.model.LazyDataModel;
 
 @Named
 @SessionScoped
-public class SingerBean extends AbstractManagedBean<Singer, Long> {
+public class SingerBean extends AbstractBean<Singer, Long> {
 
     private static final long serialVersionUID = 9125920186450221214L;
 
     @EJB
-    private SingerFacadeLocalBean service;
+    private SingerService service;
 
     @Override
     protected Singer initEntity() {

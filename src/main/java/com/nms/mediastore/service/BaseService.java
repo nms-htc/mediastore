@@ -1,4 +1,4 @@
-package com.nms.mediastore.ejb;
+package com.nms.mediastore.service;
 
 import java.io.Serializable;
 import java.util.List;

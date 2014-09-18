@@ -27,14 +27,7 @@ public class Topic implements Serializable {
     private static final long serialVersionUID = 1131759164045421326L;
 
     @Id
-    @TableGenerator(
-            name = "topicSQ",
-            table = "MS_SEQUENCE",
-            pkColumnName = "NAME",
-            pkColumnValue = "VALUE",
-            valueColumnName = "TOPIC_SQ"
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "topicSQ")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TOPICID")
     private Long topicId;
 

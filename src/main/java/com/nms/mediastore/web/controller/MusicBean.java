@@ -1,7 +1,7 @@
 package com.nms.mediastore.web.controller;
 
-import com.nms.mediastore.ejb.BaseService;
-import com.nms.mediastore.ejb.MusicFacadeLocalBean;
+import com.nms.mediastore.service.BaseService;
+import com.nms.mediastore.service.MusicService;
 import com.nms.mediastore.entity.Music;
 import com.nms.mediastore.model.MusicLazyDataModel;
 import javax.ejb.EJB;
@@ -11,12 +11,12 @@ import org.primefaces.model.LazyDataModel;
 
 @Named
 @SessionScoped
-public class MusicBean extends AbstractManagedBean<Music, Long> {
+public class MusicBean extends AbstractBean<Music, Long> {
 
     private static final long serialVersionUID = -8912312157585232815L;
 
     @EJB
-    private MusicFacadeLocalBean service;
+    private MusicService service;
 
     public MusicBean() {
     }

@@ -5,8 +5,8 @@
  */
 package com.nms.mediastore.web.convertor;
 
-import com.nms.mediastore.ejb.BaseService;
-import com.nms.mediastore.ejb.TopicFacadeLocalBean;
+import com.nms.mediastore.service.BaseService;
+import com.nms.mediastore.service.TopicService;
 import com.nms.mediastore.entity.Topic;
 import javax.ejb.EJB;
 import javax.faces.convert.FacesConverter;
@@ -15,7 +15,7 @@ import javax.faces.convert.FacesConverter;
 public class TopicConvertor extends AbstractEntityConvertor<Topic, Long> {
 
     @EJB
-    private TopicFacadeLocalBean service;
+    private TopicService service;
 
     @Override
     protected BaseService<Topic, Long> getBaseService() {

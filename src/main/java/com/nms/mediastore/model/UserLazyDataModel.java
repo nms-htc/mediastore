@@ -1,6 +1,6 @@
 package com.nms.mediastore.model;
 
-import com.nms.mediastore.ejb.BaseService;
+import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.entity.User;
 
 public class UserLazyDataModel extends AbstractLazyDataModel<User, Long> {

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="value"/>
+        <cc:valueHolder name="entry"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <p:spacer height="10"/>
+        <p:dataTable id="#{cc.id}"
+                     value="#{cc.attrs.value}"
+                     var="entry"
+                     lazy="true"
+                     paginator="true"
+                     rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="10,15,20" 
+                     paginatorPosition="bottom">
+            <cc:insertChildren/>
+        </p:dataTable>
+    </cc:implementation>
+
+</html>
+

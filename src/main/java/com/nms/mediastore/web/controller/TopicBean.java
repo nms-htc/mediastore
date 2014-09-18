@@ -1,7 +1,7 @@
 package com.nms.mediastore.web.controller;
 
-import com.nms.mediastore.ejb.BaseService;
-import com.nms.mediastore.ejb.TopicFacadeLocalBean;
+import com.nms.mediastore.service.BaseService;
+import com.nms.mediastore.service.TopicService;
 import com.nms.mediastore.entity.Topic;
 import com.nms.mediastore.model.TopicLazyDataModel;
 import javax.ejb.EJB;
@@ -11,12 +11,12 @@ import org.primefaces.model.LazyDataModel;
 
 @Named
 @SessionScoped
-public class TopicBean extends AbstractManagedBean<Topic, Long> {
+public class TopicBean extends AbstractBean<Topic, Long> {
 
     private static final long serialVersionUID = 3377965103066981773L;
 
     @EJB
-    private TopicFacadeLocalBean service;
+    private TopicService service;
 
     public TopicBean() {
     }

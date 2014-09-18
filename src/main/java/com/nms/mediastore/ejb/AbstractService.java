@@ -1,6 +1,6 @@
-package com.nms.mediastore.ejb.impl;
+package com.nms.mediastore.ejb;
 
-import com.nms.mediastore.ejb.BaseService;
+import com.nms.mediastore.service.BaseService;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -21,14 +21,14 @@ import org.primefaces.model.SortOrder;
  * @param <T> Entity Class Type
  * @param <Id> Entity's Id Class Type
  */
-public abstract class AbstractServiceBean<T, Id> implements BaseService<T, Id> {
+public abstract class AbstractService<T, Id> implements BaseService<T, Id> {
 
     private static final long serialVersionUID = 8144780304797677034L;
 
     protected abstract EntityManager getEntityManager();
     private final Class<T> entityClass;
 
-    public AbstractServiceBean(Class<T> entityClass) {
+    public AbstractService(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
@@ -65,7 +65,7 @@ public abstract class AbstractServiceBean<T, Id> implements BaseService<T, Id> {
 
     @Override
     public T persist(T entity) {
-        onAfterPersist(entity);
+        onBeforePersist(entity);
         getEntityManager().persist(entity);
         getEntityManager().flush();
         onAfterPersist(entity);
