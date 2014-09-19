@@ -5,9 +5,6 @@
  */
 package com.nms.mediastore.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -15,16 +12,10 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,14 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 })
 @Table(name = "MS_USER")
 @XmlRootElement
-public class User implements Serializable {
+public class User extends BaseEntity {
 
     private static final long serialVersionUID = 6010197496803589311L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USERID")
-    private Long userId;
 
     @NotNull
     @Size(max = 75)
@@ -66,16 +52,8 @@ public class User implements Serializable {
 
     @NotNull
     @Size(max = 200)
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true)
     private String email;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATEDATE")
-    private Date createDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "MODIFIEDDATE")
-    private Date modifiedDate;
 
     @ElementCollection(targetClass = Group.class)
     @Enumerated(EnumType.STRING)
@@ -85,17 +63,6 @@ public class User implements Serializable {
     private Set<Group> groups;
 
     public User() {
-        Date now = new Date();
-        createDate = now;
-        modifiedDate = now;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {
@@ -138,22 +105,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
     public Set<Group> getGroups() {
         return groups;
     }
@@ -161,24 +112,4 @@ public class User implements Serializable {
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final User other = (User) obj;
-        return Objects.equals(this.userId, other.userId);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + (int) (this.userId ^ (this.userId >>> 32));
-        return hash;
-    }
-
 }

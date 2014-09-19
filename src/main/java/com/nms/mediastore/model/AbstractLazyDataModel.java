@@ -5,6 +5,7 @@
  */
 package com.nms.mediastore.model;
 
+import com.nms.mediastore.entity.BaseEntity;
 import com.nms.mediastore.service.BaseService;
 import java.util.List;
 import java.util.Map;
@@ -15,31 +16,30 @@ import org.primefaces.model.SortOrder;
  *
  * @author CuongNT
  * @param <T>
- * @param <Id>
  */
-public abstract class AbstractLazyDataModel<T, Id> extends LazyDataModel<T> {
+public abstract class AbstractLazyDataModel<T extends BaseEntity> extends LazyDataModel<T> {
 
     private static final long serialVersionUID = -1137464869996262401L;
 
-    protected final BaseService<T, Id> baseService;
+    protected abstract BaseService<T> getService();
 
-    public AbstractLazyDataModel(BaseService<T, Id> baseService) {
-        this.baseService = baseService;
+    protected Long parserRowKey(String rowKey) {
+        return Long.parseLong(rowKey);
     }
-
-    protected abstract Id parserRowKey(String rowKey);
 
     @Override
     public T getRowData(String rowKey) {
-        return baseService.find(parserRowKey(rowKey));
+        return getService().find(parserRowKey(rowKey));
     }
 
     @Override
-    public abstract Object getRowKey(T object);
+    public Object getRowKey(T object) {
+        return ((BaseEntity) object).getId();
+    }
 
     @Override
     public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        this.setRowCount(baseService.countForPFDatatable(filters));
-        return baseService.searchForPFDatatable(first, first, sortField, sortOrder, filters);
+        this.setRowCount(getService().countForPFDatatable(filters));
+        return getService().searchForPFDatatable(first, first, sortField, sortOrder, filters);
     }
 }

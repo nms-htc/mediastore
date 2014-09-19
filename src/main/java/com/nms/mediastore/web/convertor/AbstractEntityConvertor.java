@@ -1,5 +1,6 @@
 package com.nms.mediastore.web.convertor;
 
+import com.nms.mediastore.entity.BaseEntity;
 import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.util.JsfUtil;
 import java.lang.reflect.ParameterizedType;
@@ -7,14 +8,18 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-abstract class AbstractEntityConvertor<T, Id> implements Converter {
+abstract class AbstractEntityConvertor<T extends BaseEntity> implements Converter {
 
     /* Factory method */
-    protected abstract BaseService<T, Id> getBaseService();
+    protected abstract BaseService<T> getBaseService();
 
-    protected abstract Id getKey(String keyStr);
+    protected Long getKey(String keyStr) {
+        return Long.parseLong(keyStr);
+    }
 
-    protected abstract String getStringKey(T entity);
+    protected String getStringKey(T entity) {
+        return String.valueOf(((BaseEntity) entity).getId());
+    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -45,6 +50,6 @@ abstract class AbstractEntityConvertor<T, Id> implements Converter {
     }
 
     protected Class<T> getEntityClass() {
-        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 }

@@ -12,24 +12,13 @@ import javax.ejb.EJB;
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter(forClass = Singer.class, value = "singerConvertor")
-public class SingerConverter extends AbstractEntityConvertor<Singer, Long> {
+public class SingerConverter extends AbstractEntityConvertor<Singer> {
     
     @EJB
     private SingerService service;
 
     @Override
-    protected BaseService<Singer, Long> getBaseService() {
+    protected BaseService<Singer> getBaseService() {
         return service;
     }
-
-    @Override
-    protected Long getKey(String keyStr) {
-        return Long.parseLong(keyStr);
-    }
-
-    @Override
-    protected String getStringKey(Singer entity) {
-        return String.valueOf(entity.getSingerId());
-    }
-    
 }

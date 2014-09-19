@@ -4,25 +4,27 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:nms="http://xmlns.jcp.org/jsf/composite/nms">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/temp/template.xhtml">
-        
+
         <ui:define name="topbody">
-            <p:dialog id="addUserDialog"
-                      header="Add new user"
-                      widgetVar="addUserDialog"
-                      modal="true">
-                <ui:include src="create.xhtml"/>
-            </p:dialog>
+            <ui:include src="create.xhtml"/>
+            <ui:include src="edit.xhtml"/>
+            <ui:include src="change_password.xhtml"/>
         </ui:define>
-        
+
         <ui:define name="content">
-            <h:form>
+            
+            <h:form id="listForm">
                 <p:toolbar>
-                    <p:toolbarGroup>
-                        <p:commandButton value="Add new user" onclick="PF('addUserDialog').show();"/>
-                    </p:toolbarGroup>
+                    <f:facet name="left">
+                        <p:commandButton id="addButton" 
+                                         value="Add new user" 
+                                         immediate="true" 
+                                         actionListener="#{userBean.prepareCreate()}"
+                                         update=":addDl"
+                                         oncomplete="PF('addDl').show();"/>
+                    </f:facet>
                 </p:toolbar>
                 <p:spacer height="10"/>
                 <p:dataTable id="userDataTable"
@@ -38,18 +40,18 @@
                              resizableColumns="true"
                              rowStyleClass="#{index mod 2 == 1 ? 'odd' : null}">
                     <p:column headerText="STT" width="20">
-                        <h:outputText value="#{index}"/>
+                        <h:outputText value="#{index + 1}"/>
                     </p:column>
 
-                    <p:column headerText="User Name" filterBy="username" filterStyle="width: 100%;">
+                    <p:column headerText="User Name" filterBy="#{user.username}" sortBy="#{user.username}" filterStyle="width: 90%;">
                         <h:outputText value="#{user.username}"/>
                     </p:column>
 
-                    <p:column headerText="Full name" filterBy="fullname" filterStyle="width: 100%">
+                    <p:column headerText="Full name" filterBy="#{user.fullname}" filterStyle="width: 90%">
                         <h:outputText value="#{user.fullname}"/>
                     </p:column>
-                    
-                    <p:column headerText="Email" filterBy="email" filterStyle="width: 100%">
+
+                    <p:column headerText="Email" filterBy="#{user.email}" filterStyle="width: 90%">
                         <h:outputText value="#{user.email}"/>
                     </p:column>
                 </p:dataTable>

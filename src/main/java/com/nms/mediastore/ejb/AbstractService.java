@@ -1,6 +1,9 @@
 package com.nms.mediastore.ejb;
 
+import com.nms.mediastore.entity.BaseEntity;
 import com.nms.mediastore.service.BaseService;
+import com.nms.mediastore.util.Validator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -19,9 +22,8 @@ import org.primefaces.model.SortOrder;
  * @since 16/09/2014
  * @version 1.0
  * @param <T> Entity Class Type
- * @param <Id> Entity's Id Class Type
  */
-public abstract class AbstractService<T, Id> implements BaseService<T, Id> {
+public abstract class AbstractService<T extends BaseEntity> implements BaseService<T> {
 
     private static final long serialVersionUID = 8144780304797677034L;
 
@@ -33,7 +35,7 @@ public abstract class AbstractService<T, Id> implements BaseService<T, Id> {
     }
 
     @Override
-    public T find(Id id) {
+    public T find(Long id) {
         return getEntityManager().find(entityClass, id);
     }
 
@@ -110,7 +112,7 @@ public abstract class AbstractService<T, Id> implements BaseService<T, Id> {
         Root<T> root = cq.from(entityClass);
         cq.select(cb.count(root));
 
-        List<Predicate> predicates = buildCondition(filters, root, cb);
+        List<Predicate> predicates = buildConditions(filters, root, cb);
 
         if (predicates != null && !predicates.isEmpty()) {
             cq.where(predicates.toArray(new Predicate[]{}));
@@ -121,34 +123,62 @@ public abstract class AbstractService<T, Id> implements BaseService<T, Id> {
     }
 
     @Override
-    public List<T> searchForPFDatatable(int start, int range, String sortField, 
+    public List<T> searchForPFDatatable(int start, int range, String sortField,
             SortOrder sortOrder, Map<String, Object> filters) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(entityClass);
         Root<T> root = cq.from(entityClass);
         cq.select(root);
-        
-        List<Predicate> predicates = buildCondition(filters, root, cb);
-        
+
+        List<Predicate> predicates = buildConditions(filters, root, cb);
+
         if (predicates != null && !predicates.isEmpty()) {
             cq.where(predicates.toArray(new Predicate[]{}));
         }
-        
-        Order order = buildOrder(sortField, sortOrder, cb);
-        
+
+        Order order = buildOrder(sortField, sortOrder, cb, root);
+
         if (order != null) {
             cq.orderBy(order);
         }
-        
+
         TypedQuery<T> q = getEntityManager().createQuery(cq);
-        
+
         q.setFirstResult(start);
         q.setMaxResults(range);
-        
+
         return q.getResultList();
     }
 
-    protected abstract List<Predicate> buildCondition(Map<String, Object> filters, Root<T> root, CriteriaBuilder cb);
+    protected List<Predicate> buildConditions(Map<String, Object> filters, Root<T> root, CriteriaBuilder cb) {
+        List<Predicate> predicates = new ArrayList<>();
+
+        for (Map.Entry<String, Object> entry : filters.entrySet()) {
+            Predicate predicate = buildCondition(entry, root, cb);
+            if (predicate != null) {
+                predicates.add(predicate);
+            }
+        }
+        
+        return predicates;
+    }
     
-    protected abstract Order buildOrder(String sortField, SortOrder sortOrder, CriteriaBuilder cb);
+    protected Predicate buildCondition(Map.Entry<String, Object> entry, Root<T> root, CriteriaBuilder cb) {
+        return cb.equal(root.get(entry.getKey()), entry.getValue());
+    }
+
+    protected Order buildOrder(String sortField, SortOrder sortOrder, CriteriaBuilder cb, Root<T> root) {
+        Order order = null;
+        if (sortOrder != null && Validator.isNotNull(sortField)) {
+            switch (sortOrder) {
+                case ASCENDING:
+                    order = cb.asc(root.get(sortField));
+                    break;
+                case DESCENDING:
+                    order = cb.desc(root.get(sortField));
+                    break;
+            }
+        }
+        return order;
+    }
 }

@@ -12,24 +12,13 @@ import javax.ejb.EJB;
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter(forClass = Artist.class, value = "artistConvertor")
-public class ArtistConvertor extends AbstractEntityConvertor<Artist, Long> {
+public class ArtistConvertor extends AbstractEntityConvertor<Artist> {
     
     @EJB
     private ArtistService service;
 
     @Override
-    protected BaseService<Artist, Long> getBaseService() {
+    protected BaseService<Artist> getBaseService() {
         return service;
     }
-
-    @Override
-    protected Long getKey(String keyStr) {
-        return Long.parseLong(keyStr);
-    }
-
-    @Override
-    protected String getStringKey(Artist entity) {
-        return String.valueOf(entity.getArtistId());
-    }
-
 }

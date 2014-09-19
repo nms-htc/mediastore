@@ -8,30 +8,23 @@ import com.nms.mediastore.util.Validator;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.xml.bind.DatatypeConverter;
-import org.primefaces.model.SortOrder;
 
 @Stateless
-public class UserServiceBean extends AbstractService<User, Long> implements UserService {
+public class UserServiceBean extends AbstractService<User> implements UserService {
 
     private static final long serialVersionUID = 459455862821896874L;
     private static final Logger LOGGER = Logger.getLogger(UserServiceBean.class.getName());
@@ -42,8 +35,6 @@ public class UserServiceBean extends AbstractService<User, Long> implements User
     public UserServiceBean() {
         super(User.class);
     }
-
-    
 
     @Override
     protected EntityManager getEntityManager() {
@@ -80,32 +71,23 @@ public class UserServiceBean extends AbstractService<User, Long> implements User
     }
 
     @Override
-    protected List<Predicate> buildCondition(Map<String, Object> filters, Root<User> root, CriteriaBuilder cb) {
-        List<Predicate> predicates = new ArrayList<>();
-
-        for (Map.Entry<String, Object> entry : filters.entrySet()) {
-            switch (entry.getKey()) {
-                case "username":
-                    predicates.add(cb.like(cb.upper(root.get(User_.username)), "%" + entry.getValue().toString().toUpperCase() + "%"));
-                    break;
-                case "fullname":
-                    predicates.add(cb.like(cb.upper(root.get(User_.fullname)), "%" + entry.getValue().toString().toUpperCase() + "%"));
-                    break;
-                case "email":
-                    predicates.add(cb.like(cb.upper(root.get(User_.email)), "%" + entry.getValue().toString().toUpperCase() + "%"));
-                    break;
-                case "groups":
-                    
-                    break;
-            }
+    protected Predicate buildCondition(Map.Entry<String, Object> entry, Root<User> root, CriteriaBuilder cb) {
+        Predicate predicate = null;
+        switch (entry.getKey()) {
+            case "username":
+                predicate = cb.like(cb.upper(root.get(User_.username)), "%" + entry.getValue().toString().toUpperCase() + "%");
+                break;
+            case "fullname":
+                predicate = cb.like(cb.upper(root.get(User_.fullname)), "%" + entry.getValue().toString().toUpperCase() + "%");
+                break;
+            case "email":
+                predicate = cb.like(cb.upper(root.get(User_.email)), "%" + entry.getValue().toString().toUpperCase() + "%");
+                break;
+            case "groups":
+                break;
         }
 
-        return predicates;
-    }
-
-    @Override
-    protected Order buildOrder(String sortField, SortOrder sortOrder, CriteriaBuilder cb) {
-        return null;
+        return predicate;
     }
 
     protected String hashSHA256(String value) throws NoSuchAlgorithmException, UnsupportedEncodingException {

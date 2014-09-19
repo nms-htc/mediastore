@@ -1,21 +1,26 @@
 package com.nms.mediastore.web.controller;
 
+import com.nms.mediastore.entity.BaseEntity;
+import com.nms.mediastore.model.AbstractLazyDataModel;
 import com.nms.mediastore.service.BaseService;
+import com.nms.mediastore.util.JsfUtil;
 import com.nms.mediastore.util.MessageUtil;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.model.SelectItem;
 import org.primefaces.model.LazyDataModel;
 
 /**
- * Abtrast class that implement all basic functionalities managed bean for
- * entities.
+ * Abtrast class that implement all basic functionalities managed bean for entities.
  *
  * @author Nguyen Trong Cuong (cuongnt1987@gmail.com)
  * @since 16/09/2014
  * @version 1.0
  * @param <T> Entity Class Type
- * @param <Id> Entity's Id Class Type
  */
-public abstract class AbstractBean<T, Id> implements Serializable {
+public abstract class AbstractBean<T extends BaseEntity> implements Serializable {
 
     private static final long serialVersionUID = 8024568564171342875L;
     private static final String REQUEST_SUCCESS_MESSAGE = "your-request-has-been-successfully-implemented";
@@ -23,8 +28,17 @@ public abstract class AbstractBean<T, Id> implements Serializable {
 
     protected T current;
     protected LazyDataModel<T> model;
+    private SelectItem[] selectItems;
 
     public AbstractBean() {
+    }
+
+    public void prepareCreate() {
+        current = null;
+    }
+
+    public void prepareUpdate(T entity) {
+        current = entity;
     }
 
     /**
@@ -37,6 +51,7 @@ public abstract class AbstractBean<T, Id> implements Serializable {
      * Call back method persist action
      */
     protected void onAfterPersist() {
+        current = initEntity();
     }
 
     /**
@@ -48,6 +63,8 @@ public abstract class AbstractBean<T, Id> implements Serializable {
 
     /**
      * Call back method persist action
+     *
+     * @param t
      */
     protected void onPersistError(Throwable t) {
         MessageUtil.addGlobalErrorMessage(REQUEST_FAIL_MESSAGE, t);
@@ -88,6 +105,8 @@ public abstract class AbstractBean<T, Id> implements Serializable {
 
     /**
      * Call back method update action
+     *
+     * @param t
      */
     protected void onErrorUpdate(Throwable t) {
         MessageUtil.addGlobalErrorMessage(REQUEST_FAIL_MESSAGE, t);
@@ -109,18 +128,24 @@ public abstract class AbstractBean<T, Id> implements Serializable {
 
     /**
      * Call back method remove action
+     *
+     * @param entity
      */
     protected void onBeforeRemove(T entity) {
     }
 
     /**
      * Call back method remove action
+     *
+     * @param entity
      */
     protected void onAfterRemove(T entity) {
     }
 
     /**
      * Call back method remove action
+     *
+     * @param entity
      */
     protected void onSuccessRemove(T entity) {
         MessageUtil.addGlobalInfoMessage(REQUEST_SUCCESS_MESSAGE);
@@ -128,6 +153,9 @@ public abstract class AbstractBean<T, Id> implements Serializable {
 
     /**
      * Call back method remove action
+     *
+     * @param entity
+     * @param t
      */
     protected void onErrorRemove(T entity, Throwable t) {
         MessageUtil.addGlobalErrorMessage(REQUEST_FAIL_MESSAGE, t);
@@ -154,21 +182,37 @@ public abstract class AbstractBean<T, Id> implements Serializable {
      *
      * @return new instanse of entity
      */
-    protected abstract T initEntity();
+    protected T initEntity() {
+        try {
+            return getEntityClass().newInstance();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(AbstractBean.class.getName()).log(Level.SEVERE, "Can not instantilize entity.", ex);
+        }
+        return null;
+    }
 
     /**
      * Factory method for initilize a new instance of LazyDataModel (Primefaces)
      *
      * @return new instance of LazyDataModel for the entity.
      */
-    protected abstract LazyDataModel<T> initDataModel();
+    protected LazyDataModel<T> initDataModel() {
+        return new AbstractLazyDataModel<T>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected BaseService<T> getService() {
+                return getBaseService();
+            }
+        };
+    }
 
     /**
      * Factoty method for BasicService EJB
      *
      * @return BasicSerivce instanse
      */
-    protected abstract BaseService<T, Id> getBaseService();
+    protected abstract BaseService<T> getBaseService();
 
     /* getters and setters */
     public T getCurrent() {
@@ -193,5 +237,20 @@ public abstract class AbstractBean<T, Id> implements Serializable {
 
     public void setModel(LazyDataModel<T> model) {
         this.model = model;
+    }
+
+    public SelectItem[] getSelectItems() {
+        if (selectItems == null) {
+            selectItems = JsfUtil.getSelectItems(getBaseService().findAll(), false);
+        }
+        return selectItems;
+    }
+
+    public void setSelectItems(SelectItem[] selectItems) {
+        this.selectItems = selectItems;
+    }
+    
+    protected Class<T> getEntityClass() {
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 }

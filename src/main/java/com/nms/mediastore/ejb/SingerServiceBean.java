@@ -8,13 +8,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.primefaces.model.SortOrder;
 
 @Stateless
-public class SingerServiceBean extends AbstractService<Singer, Long> implements SingerService {
+public class SingerServiceBean extends AbstractService<Singer> implements SingerService {
 
     private static final long serialVersionUID = 3818354189108798555L;
 
@@ -31,13 +29,7 @@ public class SingerServiceBean extends AbstractService<Singer, Long> implements 
     }
 
     @Override
-    protected List<Predicate> buildCondition(Map<String, Object> filters, Root<Singer> root, CriteriaBuilder cb) {
+    protected List<Predicate> buildConditions(Map<String, Object> filters, Root<Singer> root, CriteriaBuilder cb) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    protected Order buildOrder(String sortField, SortOrder sortOrder, CriteriaBuilder cb) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

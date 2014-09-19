@@ -12,23 +12,14 @@ import javax.ejb.EJB;
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter(forClass = Topic.class, value = "topicConvertor")
-public class TopicConvertor extends AbstractEntityConvertor<Topic, Long> {
+public class TopicConvertor extends AbstractEntityConvertor<Topic> {
 
     @EJB
     private TopicService service;
 
     @Override
-    protected BaseService<Topic, Long> getBaseService() {
+    protected BaseService<Topic> getBaseService() {
         return service;
     }
 
-    @Override
-    protected Long getKey(String keyStr) {
-        return Long.parseLong(keyStr);
-    }
-
-    @Override
-    protected String getStringKey(Topic entity) {
-        return String.valueOf(entity.getTopicId());
-    }
 }

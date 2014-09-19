@@ -6,24 +6,37 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <h:form id="addUserForm">
-            <p:messages />
-            <p:panelGrid columns="2">
-                <p:outputLabel for="username" value="Username"/>
-                <p:inputText id="username" value="#{userBean.current.username}"/>
-                
-                <p:outputLabel for="password" value="Password"/>
-                <p:password id="password"/>
-                
-                <p:outputLabel for="fullname" value="Fullname"/>
-                <p:inputText id="fullname"/>
-                
-                <f:facet name="footer">
-                    <p:commandButton value="Save" actionListener="#{userBean.persist()}" update="addUserForm"/>
-                </f:facet>
-            </p:panelGrid>
-        </h:form>
-        
+        <p:dialog id="addDl"
+                  widgetVar="addDl"
+                  modal="true"
+                  draggable="false"
+                  header="#{msg['user-add-user-dialog-title']}">
+            <h:form id="addUserForm">
+                <p:messages globalOnly="true"/>
+                <p:panelGrid columns="3" style="width: 100%">
+                    <p:outputLabel for="fullname" value="#{msg['user-fullname-title']}"/>
+                    <p:inputText id="fullname" value="#{userBean.current.fullname}" size="35"/>
+                    <p:message for="fullname"/>
+
+                    <p:outputLabel for="username" value="#{msg['user-username-title']}"/>
+                    <p:inputText id="username" value="#{userBean.current.username}" size="35"/>
+                    <p:message for="username"/>
+                    
+                    <p:outputLabel for="password" value="#{msg['user-password-title']}"/>
+                    <p:password id="password" value="#{userBean.current.password}" size="35"/>
+                    <p:message for="password"/>
+                    
+                    <p:outputLabel for="email" value="#{msg['user-email-title']}"/>
+                    <p:inputText id="email" value="#{userBean.current.email}" size="35"/>
+                    <p:message for="email"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{msg['save']}" actionListener="#{userBean.persist()}" update="addUserForm :userListFm"/>
+                        <p:commandButton value="#{msg['cancel']}" type="button" oncomplete="PF('addUserDl').hide();"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
     </ui:composition>
 </html>
 
