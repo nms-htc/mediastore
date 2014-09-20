@@ -1,5 +1,6 @@
 package com.nms.mediastore.ejb;
 
+import com.nms.mediastore.entity.BaseEntity_;
 import com.nms.mediastore.service.UserService;
 import com.nms.mediastore.entity.Group;
 import com.nms.mediastore.entity.User;
@@ -83,7 +84,22 @@ public class UserServiceBean extends AbstractService<User> implements UserServic
             case "email":
                 predicate = cb.like(cb.upper(root.get(User_.email)), "%" + entry.getValue().toString().toUpperCase() + "%");
                 break;
+            case "description":
+                predicate = cb.like(cb.upper(root.get(BaseEntity_.description)), "%" + entry.getValue().toString().toUpperCase() + "%");
+                break;
             case "groups":
+                Object value = entry.getValue();
+                if (value instanceof Object[]) {
+                    Object[] listValue = (Object[]) value;
+                    Predicate[] listPredicates = new Predicate[listValue.length];
+
+                    for (int i = 0; i < listValue.length; i++) {
+                        listPredicates[i] = cb.isMember((Group) listValue[i], root.get(User_.groups));
+                    }
+                    predicate = cb.and(listPredicates);
+                } else if (value instanceof Group) {
+                    predicate = cb.isMember((Group) value, root.get(User_.groups));
+                }
                 break;
         }
 
@@ -126,6 +142,17 @@ public class UserServiceBean extends AbstractService<User> implements UserServic
         }
 
         return user;
+    }
+
+    @Override
+    public User updateUserPassword(User user) {
+        try {
+            user.setPassword(hashSHA256(user.getPassword()));
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            throw new EJBException("can-not-hash(sha256)-password", e);
+        }
+
+        return update(user);
     }
 
     @Override

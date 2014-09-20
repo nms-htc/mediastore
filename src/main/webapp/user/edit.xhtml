@@ -2,9 +2,50 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
+        <p:dialog id="editDl"
+                  widgetVar="editDl"
+                  modal="true"
+                  draggable="false"
+                  header="#{msg['user-dialog-edit-title']}">
 
+            <h:form id="editForm">
+                <p:messages globalOnly="true"/>
+
+                <p:panelGrid columns="3" style="width: 100%">
+                    
+                    <p:outputLabel for="username" value="#{msg['user-username-label']}"/>
+                    <p:inputText id="username" value="#{userBean.current.username}" size="35" disabled="true"/>
+                    <p:message for="username"/>
+                    
+                    <p:outputLabel for="fullname" value="#{msg['user-fullname-label']}"/>
+                    <p:inputText id="fullname" value="#{userBean.current.fullname}" size="35"/>
+                    <p:message for="fullname"/>
+
+                    <p:outputLabel for="email" value="#{msg['user-email-label']}"/>
+                    <p:inputText id="email" value="#{userBean.current.email}" size="35"/>
+                    <p:message for="email"/>
+
+                    <p:outputLabel for="groups" value="#{msg['user-groups-label']}"/>
+                    <p:selectManyCheckbox id="groups" value="#{userBean.current.groups}"
+                                          converter="enumConvertor">
+                        <f:selectItems value="#{userBean.groupSelectItems}"/>
+                    </p:selectManyCheckbox>
+                    <p:message for="groups"/>
+
+                    <p:outputLabel for="description" value="#{msg['common-description-label']}"/>
+                    <p:inputTextarea id="description" cols="35" rows="10" value="#{userBean.current.description}"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{msg['save']}" actionListener="#{userBean.update()}" update="editForm :listForm"/>
+                        <p:commandButton value="#{msg['cancel']}" type="button" onclick="PF('editDl').hide();"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
     </ui:composition>
 </html>
 

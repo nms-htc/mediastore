@@ -2,45 +2,36 @@ package com.nms.mediastore.entity;
 
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "MS_MUSIC")
 @XmlRootElement
-public class Music extends BaseEntity {
+public class Music extends ThumbnailEntity {
 
     private static final long serialVersionUID = 3721867941446196307L;
-
-    @NotNull
-    @Size(max = 200)
-    @Column(name = "FILEURI")
-    private String fileUri;
-
-    @Size(max = 200)
-    @Column(name = "IMAGEURI")
-    private String imageUri;
 
     @Column(name = "ISHOT")
     private Boolean hot;
 
     @ManyToOne
-    @JoinColumn(name = "ARTISTID")
+    @JoinColumn(name = "ARTISTID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Artist artist;
 
     @ManyToOne
-    @JoinColumn(name = "USERID")
+    @JoinColumn(name = "USERID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "SINGERID")
+    @JoinColumn(name = "SINGERID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Singer singer;
 
     @ManyToMany
@@ -48,14 +39,6 @@ public class Music extends BaseEntity {
     private Set<Topic> topics;
 
     public Music() {
-    }
-
-    public String getFileUri() {
-        return fileUri;
-    }
-
-    public void setFileUri(String fileUri) {
-        this.fileUri = fileUri;
     }
 
     public Boolean getHot() {
@@ -96,13 +79,5 @@ public class Music extends BaseEntity {
 
     public void setTopics(Set<Topic> topics) {
         this.topics = topics;
-    }
-
-    public String getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
     }
 }

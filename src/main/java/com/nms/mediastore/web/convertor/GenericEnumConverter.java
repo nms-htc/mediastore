@@ -14,10 +14,10 @@ import javax.faces.convert.FacesConverter;
  * @since 08/27/2014
  * @version 1.0.1
  */
-@FacesConverter("enumConverter")
+@FacesConverter("enumConvertor")
 public class GenericEnumConverter implements Converter {
 
-    public static final String ATTRIBUTE_ENUM_TYPE = "GenericEnumConverter.enumType";
+    public static final String ATTRIBUTE_ENUM_TYPE = "GenericEnumConvertor.enumType";
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

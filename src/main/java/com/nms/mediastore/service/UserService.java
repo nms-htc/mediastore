@@ -10,6 +10,8 @@ public interface UserService extends BaseService<User> {
     public User findByUsername(String username);
 
     public User updateUserPassword(User user, String oldPassword, String newPassword);
+    
+    public User updateUserPassword(User user);
 
     public List<User> findAdministrators();
 

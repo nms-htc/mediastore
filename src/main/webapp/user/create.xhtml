@@ -6,33 +6,46 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <p:dialog id="addDl"
-                  widgetVar="addDl"
+        <p:dialog id="createDl"
+                  widgetVar="createDl"
                   modal="true"
                   draggable="false"
-                  header="#{msg['user-add-user-dialog-title']}">
-            <h:form id="addUserForm">
+                  header="#{msg['user-dialog-create-title']}">
+            
+            <h:form id="createForm">
                 <p:messages globalOnly="true"/>
+                
                 <p:panelGrid columns="3" style="width: 100%">
-                    <p:outputLabel for="fullname" value="#{msg['user-fullname-title']}"/>
+                    <p:outputLabel for="fullname" value="#{msg['user-fullname-label']}"/>
                     <p:inputText id="fullname" value="#{userBean.current.fullname}" size="35"/>
                     <p:message for="fullname"/>
 
-                    <p:outputLabel for="username" value="#{msg['user-username-title']}"/>
+                    <p:outputLabel for="username" value="#{msg['user-username-label']}"/>
                     <p:inputText id="username" value="#{userBean.current.username}" size="35"/>
                     <p:message for="username"/>
                     
-                    <p:outputLabel for="password" value="#{msg['user-password-title']}"/>
+                    <p:outputLabel for="password" value="#{msg['user-password-label']}"/>
                     <p:password id="password" value="#{userBean.current.password}" size="35"/>
                     <p:message for="password"/>
                     
-                    <p:outputLabel for="email" value="#{msg['user-email-title']}"/>
+                    <p:outputLabel for="email" value="#{msg['user-email-label']}"/>
                     <p:inputText id="email" value="#{userBean.current.email}" size="35"/>
                     <p:message for="email"/>
-
+                    
+                    <p:outputLabel for="groups" value="#{msg['user-groups-label']}"/>
+                    <p:selectManyCheckbox id="groups" value="#{userBean.current.groups}"
+                                          converter="enumConvertor">
+                        <f:selectItems value="#{userBean.groupSelectItems}"/>
+                    </p:selectManyCheckbox>
+                    <p:message for="groups"/>
+                    
+                    <p:outputLabel for="description" value="#{msg['common-description-label']}"/>
+                    <p:inputTextarea id="description" cols="35" rows="10" value="#{userBean.current.description}"/>
+                    <p:message for="description"/>
+                    
                     <f:facet name="footer">
-                        <p:commandButton value="#{msg['save']}" actionListener="#{userBean.persist()}" update="addUserForm :userListFm"/>
-                        <p:commandButton value="#{msg['cancel']}" type="button" oncomplete="PF('addUserDl').hide();"/>
+                        <p:commandButton value="#{msg['save']}" actionListener="#{userBean.persist()}" update="createForm :listForm"/>
+                        <p:commandButton value="#{msg['cancel']}" type="button" onclick="PF('createDl').hide();"/>
                     </f:facet>
                 </p:panelGrid>
             </h:form>

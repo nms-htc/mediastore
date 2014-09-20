@@ -6,12 +6,12 @@ import com.nms.mediastore.service.UserService;
 import com.nms.mediastore.entity.User;
 import com.nms.mediastore.util.MessageUtil;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class UserBean extends AbstractBean<User> {
 
     private static final long serialVersionUID = -1150645605262032055L;
@@ -27,6 +27,19 @@ public class UserBean extends AbstractBean<User> {
     @Override
     protected BaseService<User> getBaseService() {
         return service;
+    }
+    
+    public void prepareChangePassword(User user) {
+        current = user;
+    }
+    
+    public void changePassword() {
+        try {
+            service.updateUserPassword(current);
+            MessageUtil.addGlobalInfoMessage("change-password-successfull");
+        } catch (Exception e) {
+            MessageUtil.addGlobalErrorMessage("change-password-error", e);
+        }
     }
 
     public SelectItem[] getGroupSelectItems() {

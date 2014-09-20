@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "MS_SINGER")
 @XmlRootElement
-public class Singer extends BaseEntity {
+public class Singer extends ThumbnailEntity {
 
     private static final long serialVersionUID = 3052122354694036724L;
 

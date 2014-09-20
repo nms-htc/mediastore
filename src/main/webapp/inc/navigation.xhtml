@@ -13,16 +13,16 @@
     
     <div id='cssmenu'>
         <ul>
-            <li class='active'><h:link outcome="/index"><span>#{msg['home-page']}</span></h:link></li>
-            <li class='has-sub'><a href='javascript:void(0);'><span>#{msg['music']}</span></a>
+            <li class="#{current == null ? 'active' : null}"><h:link outcome="/index"><span>#{msg['home-page']}</span></h:link></li>
+            <li class="has-sub #{current == 'music' ? 'active' : null}"><a href='javascript:void(0);'><span>#{msg['music']}</span></a>
                 <ul>
-                    <li><a href='#'><span>#{msg['music']}</span></a></li>
-                    <li><a href='#'><span>#{msg['music-topic']}</span></a></li>
-                    <li><a href='#'><span>#{msg['artist']}</span></a></li>
-                    <li class='last'><a href='#'><span>#{msg['singer']}</span></a></li>
+                    <li><h:link outcome="/music/list"><span>#{msg['music']}</span></h:link></li>
+                    <li><h:link outcome="/topic/list"><span>#{msg['music-topic']}</span></h:link></li>
+                    <li><h:link outcome="/artist/list"><span>#{msg['artist']}</span></h:link></li>
+                    <li class='last'><h:link outcome="/singer/list"><span>#{msg['singer']}</span></h:link></li>
                 </ul>
             </li>
-            <li class='last'><h:link outcome="/user/list"><span>#{msg['user-manager']}</span></h:link></li>
+            <li class="last #{current == 'user' ? 'active' : null}"><h:link outcome="/user/list"><span>#{msg['user-manager']}</span></h:link></li>
         </ul>
     </div>
     

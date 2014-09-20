@@ -38,7 +38,6 @@ public class ApplicationConfig implements Serializable {
             admin.setUsername("admin");
             admin.setPassword("admin");
             admin.setEmail("duymb@nms.com.vn");
-            admin.setGroups(groups);
             try {
                 userService.persist(admin);
             } catch (Exception e) {

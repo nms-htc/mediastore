@@ -5,7 +5,7 @@
  */
 package com.nms.mediastore.entity;
 
-import java.util.Set;
+import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 })
 @Table(name = "MS_USER")
 @XmlRootElement
-public class User extends BaseEntity {
+public class User extends ThumbnailEntity {
 
     private static final long serialVersionUID = 6010197496803589311L;
 
@@ -60,7 +60,7 @@ public class User extends BaseEntity {
     @CollectionTable(name = "MS_USERGROUP", joinColumns = {
         @JoinColumn(name = "USERID")})
     @Column(name = "GROUPNAME")
-    private Set<Group> groups;
+    private List<Group> groups;
 
     public User() {
     }
@@ -105,11 +105,11 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    public Set<Group> getGroups() {
+    public List<Group> getGroups() {
         return groups;
     }
 
-    public void setGroups(Set<Group> groups) {
+    public void setGroups(List<Group> groups) {
         this.groups = groups;
     }
 }

@@ -4,9 +4,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/temp/template.xhtml">
-
+        <ui:param name="current" value="user"/>
         <ui:define name="topbody">
             <ui:include src="create.xhtml"/>
             <ui:include src="edit.xhtml"/>
@@ -14,20 +15,27 @@
         </ui:define>
 
         <ui:define name="content">
-            
+
             <h:form id="listForm">
+                <p:messages globalOnly="true"/>
                 <p:toolbar>
                     <f:facet name="left">
                         <p:commandButton id="addButton" 
-                                         value="Add new user" 
+                                         value="#{msg['user-action-create']}" 
                                          immediate="true" 
                                          actionListener="#{userBean.prepareCreate()}"
-                                         update=":addDl"
-                                         oncomplete="PF('addDl').show();"/>
+                                         update=":createDl"
+                                         oncomplete="PF('createDl').show();"/>
+
+                    </f:facet>
+                    <f:facet name="right">
+                        <!--p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator" />
+                        <p:columnToggler datasource="listTable" trigger="toggler" /-->
                     </f:facet>
                 </p:toolbar>
                 <p:spacer height="10"/>
-                <p:dataTable id="userDataTable"
+                <p:dataTable id="listTable"
+                             widgetVar="listTable"
                              value="#{userBean.model}"
                              var="user"
                              rowIndexVar="index"
@@ -39,20 +47,77 @@
                              paginatorPosition="bottom"
                              resizableColumns="true"
                              rowStyleClass="#{index mod 2 == 1 ? 'odd' : null}">
-                    <p:column headerText="STT" width="20">
+
+                    <p:column headerText="#{msg['common-index-label']}" width="20" toggleable="false">
                         <h:outputText value="#{index + 1}"/>
                     </p:column>
 
-                    <p:column headerText="User Name" filterBy="#{user.username}" sortBy="#{user.username}" filterStyle="width: 90%;">
+                    <p:column headerText="#{msg['user-username-label']}" 
+                              filterBy="#{user.username}" 
+                              sortBy="#{user.username}" 
+                              filterStyle="width: 90%;">
                         <h:outputText value="#{user.username}"/>
                     </p:column>
 
-                    <p:column headerText="Full name" filterBy="#{user.fullname}" filterStyle="width: 90%">
+                    <p:column headerText="#{msg['user-fullname-label']}" 
+                              filterBy="#{user.fullname}" 
+                              sortBy="#{user.fullname}"
+                              filterStyle="width: 90%">
                         <h:outputText value="#{user.fullname}"/>
                     </p:column>
 
-                    <p:column headerText="Email" filterBy="#{user.email}" filterStyle="width: 90%">
+                    <p:column headerText="#{msg['user-email-label']}" 
+                              sortBy="#{user.email}"
+                              filterBy="#{user.email}" 
+                              filterStyle="width: 90%">
                         <h:outputText value="#{user.email}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['user-groups-label']}"
+                              filterBy="#{user.groups}"
+                              filterStyle="width: 90%">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu label="#{msg['user-groups-label']}"
+                                                  converter="enumConvertor"
+                                                  onHide="PF('listTable').filter()"
+                                                  panelStyle="width: 150px">
+                                <f:selectItems value="#{userBean.groupSelectItems}"/>
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <ui:repeat value="#{user.groups}" var="group" varStatus="vs">
+                            <h:outputText value="#{group}"/>
+                            <h:outputText value=", " rendered="#{!vs.last}"/>
+                        </ui:repeat>
+                    </p:column>
+
+                    <p:column headerText="#{msg['common-description-label']}" 
+                              sortBy="#{user.description}"
+                              filterBy="#{user.description}"
+                              filterStyle="width: 90%">
+                        <h:outputText value="#{user.description}"/>
+                    </p:column>
+                    
+                    <p:column style="width: 90px" toggleable="false" >
+                        <p:commandButton icon="ui-icon-pencil" 
+                                         update=":editDl" 
+                                         immediate="true"
+                                         actionListener="#{userBean.prepareUpdate(user)}"
+                                         oncomplete="PF('editDl').show();"/>
+
+                        <p:commandButton icon="ui-icon-key" 
+                                         update=":changePassDl" 
+                                         immediate="true" 
+                                         actionListener="#{userBean.prepareChangePassword(user)}"
+                                         oncomplete="PF('changePassDl').show();"/>
+
+                        <p:commandButton icon="ui-icon-trash" 
+                                         actionListener="#{userBean.remove(user)}"
+                                         immediate="true"
+                                         update="@form :growl">
+                            <p:confirm header="Confirmation"
+                                       message="#{msg['user-action-delete-confirm-msg']}" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>
