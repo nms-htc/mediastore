@@ -28,8 +28,4 @@ public class MusicServiceBean extends AbstractService<Music> implements MusicSer
         return em;
     }
 
-    @Override
-    protected List<Predicate> buildConditions(Map<String, Object> filters, Root<Music> root, CriteriaBuilder cb) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

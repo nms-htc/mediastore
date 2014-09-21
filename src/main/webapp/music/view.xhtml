@@ -1,12 +1,23 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+    <ui:composition>
+        <p:dialog id="viewDl"
+                  widgetVar="viewDl"
+                  modal="true"
+                  draggable="false"
+                  header="#{msg['artist-dialog-view-title']}">
+            <p:panelGrid columns="2">
+                <h:outputText value="#{msg['common-title-label']}"/>
+                <h:outputText value="#{artistBean.current.title}"/>
+
+                <h:outputText value="#{msg['common-description-label']}"/>
+                <h:outputText value="#{artistBean.current.description}"/>
+            </p:panelGrid>
+        </p:dialog>
+    </ui:composition>
 </html>
 

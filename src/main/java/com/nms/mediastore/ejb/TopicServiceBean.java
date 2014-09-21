@@ -28,8 +28,4 @@ public class TopicServiceBean extends AbstractService<Topic> implements TopicSer
         return em;
     }
 
-    @Override
-    protected List<Predicate> buildConditions(Map<String, Object> filters, Root<Topic> root, CriteriaBuilder cb) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

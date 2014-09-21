@@ -28,8 +28,4 @@ public class SingerServiceBean extends AbstractService<Singer> implements Singer
         return em;
     }
 
-    @Override
-    protected List<Predicate> buildConditions(Map<String, Object> filters, Root<Singer> root, CriteriaBuilder cb) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

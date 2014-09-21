@@ -4,10 +4,11 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/temp/template.xhtml">
+        
         <ui:param name="current" value="user"/>
+        
         <ui:define name="topbody">
             <ui:include src="create.xhtml"/>
             <ui:include src="edit.xhtml"/>
@@ -23,7 +24,7 @@
                         <p:commandButton id="addButton" 
                                          value="#{msg['user-action-create']}" 
                                          immediate="true" 
-                                         actionListener="#{userBean.prepareCreate()}"
+                                         actionListener="#{userBean.resetEntity()}"
                                          update=":createDl"
                                          oncomplete="PF('createDl').show();"/>
 
@@ -33,7 +34,9 @@
                         <p:columnToggler datasource="listTable" trigger="toggler" /-->
                     </f:facet>
                 </p:toolbar>
+                
                 <p:spacer height="10"/>
+                
                 <p:dataTable id="listTable"
                              widgetVar="listTable"
                              value="#{userBean.model}"
@@ -96,12 +99,12 @@
                               filterStyle="width: 90%">
                         <h:outputText value="#{user.description}"/>
                     </p:column>
-                    
+
                     <p:column style="width: 90px" toggleable="false" >
                         <p:commandButton icon="ui-icon-pencil" 
                                          update=":editDl" 
                                          immediate="true"
-                                         actionListener="#{userBean.prepareUpdate(user)}"
+                                         actionListener="#{userBean.prepareEntity(user)}"
                                          oncomplete="PF('editDl').show();"/>
 
                         <p:commandButton icon="ui-icon-key" 

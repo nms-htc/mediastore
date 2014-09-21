@@ -27,10 +27,4 @@ public class ArtistServiceBean extends AbstractService<Artist> implements Artist
     protected EntityManager getEntityManager() {
         return em;
     }
-
-    @Override
-    protected List<Predicate> buildConditions(Map<String, Object> filters, Root<Artist> root, CriteriaBuilder cb) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

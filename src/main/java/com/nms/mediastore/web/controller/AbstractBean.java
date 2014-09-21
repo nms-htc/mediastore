@@ -33,11 +33,11 @@ public abstract class AbstractBean<T extends BaseEntity> implements Serializable
     public AbstractBean() {
     }
 
-    public void prepareCreate() {
+    public void resetEntity() {
         current = null;
     }
 
-    public void prepareUpdate(T entity) {
+    public void prepareEntity(T entity) {
         current = entity;
     }
 
