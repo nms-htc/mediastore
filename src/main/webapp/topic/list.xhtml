@@ -1,18 +1,96 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../temp/template.xhtml">
-    
-    <ui:param name="current" value="music"/>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/temp/template.xhtml">
 
-    <ui:define name="topbody">
-        <ui:include src="view.xhtml"/>
-        <ui:include src="edit.xhtml"/>
-        <ui:include src="create.xhtml"/>
-    </ui:define>
+        <ui:param name="current" value="music"/>
 
-    <ui:define name="content">
-        
-    </ui:define>
+        <ui:define name="topbody">
+            <ui:include src="create.xhtml"/>
+            <ui:include src="edit.xhtml"/>
+            <ui:include src="view.xhtml"/>
+        </ui:define>
 
-</ui:composition>
+        <ui:define name="content">
+
+            <h:form id="listForm">
+                <p:messages globalOnly="true"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="addButton" 
+                                         value="#{msg['topic-action-create']}" 
+                                         immediate="true" 
+                                         actionListener="#{topicBean.resetEntity()}"
+                                         update=":createDl"
+                                         oncomplete="PF('createDl').show();"/>
+
+                    </f:facet>
+                </p:toolbar>
+
+                <p:spacer height="10"/>
+
+                <p:dataTable id="listTable"
+                             widgetVar="listTable"
+                             value="#{topicBean.model}"
+                             var="topic"
+                             rowIndexVar="index"
+                             lazy="true"
+                             paginator="true"
+                             rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="10,15,20" 
+                             paginatorPosition="bottom"
+                             resizableColumns="true"
+                             rowStyleClass="#{index mod 2 == 1 ? 'odd' : null}">
+
+                    <p:column headerText="#{msg['common-index-label']}" width="20" toggleable="false">
+                        <h:outputText value="#{index + 1}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['common-title-label']}" 
+                              filterBy="#{topic.title}" 
+                              sortBy="#{topic.title}" 
+                              filterStyle="width: 90%;">
+                        <h:outputText value="#{topic.title}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['common-description-label']}" 
+                              filterBy="#{topic.description}" 
+                              sortBy="#{topic.description}"
+                              filterStyle="width: 90%">
+                        <h:outputText value="#{topic.description}"/>
+                    </p:column>
+
+                    <p:column style="width: 90px" toggleable="false" >
+                        <p:commandButton icon="ui-icon-search" 
+                                         update=":viewDl" 
+                                         immediate="true"
+                                         actionListener="#{topicBean.prepareEntity(topic)}"
+                                         oncomplete="PF('viewDl').show();"/>
+
+                        <p:commandButton icon="ui-icon-pencil" 
+                                         update=":editDl" 
+                                         immediate="true"
+                                         actionListener="#{topicBean.prepareEntity(topic)}"
+                                         oncomplete="PF('editDl').show();"/>
+
+
+                        <p:commandButton icon="ui-icon-trash" 
+                                         actionListener="#{topicBean.remove(topic)}"
+                                         immediate="true"
+                                         update="@form :growl">
+                            <p:confirm header="Confirmation"
+                                       message="#{msg['topic-action-delete-confirm-msg']}" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

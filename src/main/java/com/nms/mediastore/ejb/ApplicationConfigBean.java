@@ -6,16 +6,22 @@ import com.nms.mediastore.service.ApplicationConfig;
 import com.nms.mediastore.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.ConcurrencyManagement;
+import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 @Startup
 @Singleton
+@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class ApplicationConfigBean implements ApplicationConfig {
 
     private static final long serialVersionUID = 3250123085047025097L;
+    private static final Logger LOGGER = Logger.getLogger(ApplicationConfigBean.class.getName());
     
     @EJB
     private UserService userService;

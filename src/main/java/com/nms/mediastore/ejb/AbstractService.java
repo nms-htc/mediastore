@@ -1,11 +1,13 @@
 package com.nms.mediastore.ejb;
 
 import com.nms.mediastore.entity.BaseEntity;
+import com.nms.mediastore.entity.ThumbnailEntity;
 import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -26,6 +28,7 @@ import org.primefaces.model.SortOrder;
 public abstract class AbstractService<T extends BaseEntity> implements BaseService<T> {
 
     private static final long serialVersionUID = 8144780304797677034L;
+    private static final Logger LOGGER = Logger.getLogger(BaseService.class.getName());
 
     protected abstract EntityManager getEntityManager();
     private final Class<T> entityClass;
@@ -63,6 +66,8 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
 
     /* Callback method */
     protected void onAfterPersist(T entity) {
+        BaseEntity baseEntity = (BaseEntity) entity;
+        LOGGER.info("[BaseService] has persisted entity with ID = " + baseEntity.getId());
     }
 
     @Override

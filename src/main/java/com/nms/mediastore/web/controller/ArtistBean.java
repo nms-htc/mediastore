@@ -4,11 +4,11 @@ import com.nms.mediastore.service.ArtistService;
 import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.entity.Artist;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class ArtistBean extends AbstractBean<Artist> {
 
     private static final long serialVersionUID = -7081995377651933248L;

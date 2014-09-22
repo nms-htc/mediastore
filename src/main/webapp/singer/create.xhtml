@@ -1,12 +1,40 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog id="createDl"
+                  widgetVar="createDl"
+                  modal="true"
+                  header="#{msg['singer-dialog-create-title']}">
+
+            <h:form id="createForm">
+                <p:messages globalOnly="true"/>
+
+                <p:panelGrid columns="3" style="width: 100%">
+<!--                    <p:outputLabel for="thumbnail" value="Thumbnail"/>
+                    <p:fileUpload id="thumbnail" value="#{singerBean.fileUpload}" mode="advanced" dragDropSupport="false"
+                                  update=":growl" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    <p:message for="thumbnail"/>-->
+
+                    <p:outputLabel for="title" value="#{msg['common-title-label']}"/>
+                    <p:inputText id="title" value="#{singerBean.current.title}" size="35"/>
+                    <p:message for="title"/>
+
+                    <p:outputLabel for="description" value="#{msg['common-description-label']}"/>
+                    <p:inputTextarea id="description" cols="35" rows="10" value="#{singerBean.current.description}"/>
+                    <p:message for="description"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{msg['save']}" actionListener="#{singerBean.persist()}" update="createForm :listForm"/>
+                        <p:commandButton value="#{msg['cancel']}" type="button" onclick="PF('createDl').hide();"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
 </html>
 

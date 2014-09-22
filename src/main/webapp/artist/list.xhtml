@@ -6,9 +6,9 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/temp/template.xhtml">
-        
+
         <ui:param name="current" value="music"/>
-        
+
         <ui:define name="topbody">
             <ui:include src="create.xhtml"/>
             <ui:include src="edit.xhtml"/>
@@ -22,25 +22,21 @@
                 <p:toolbar>
                     <f:facet name="left">
                         <p:commandButton id="addButton" 
-                                         value="#{msg['user-action-create']}" 
+                                         value="#{msg['artist-action-create']}" 
                                          immediate="true" 
-                                         actionListener="#{userBean.resetEntity()}"
+                                         actionListener="#{artistBean.resetEntity()}"
                                          update=":createDl"
                                          oncomplete="PF('createDl').show();"/>
 
                     </f:facet>
-                    <f:facet name="right">
-                        <!--p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator" />
-                        <p:columnToggler datasource="listTable" trigger="toggler" /-->
-                    </f:facet>
                 </p:toolbar>
-                
+
                 <p:spacer height="10"/>
-                
+
                 <p:dataTable id="listTable"
                              widgetVar="listTable"
-                             value="#{userBean.model}"
-                             var="user"
+                             value="#{artistBean.model}"
+                             var="artist"
                              rowIndexVar="index"
                              lazy="true"
                              paginator="true"
@@ -55,65 +51,40 @@
                         <h:outputText value="#{index + 1}"/>
                     </p:column>
 
-                    <p:column headerText="#{msg['user-username-label']}" 
-                              filterBy="#{user.username}" 
-                              sortBy="#{user.username}" 
+                    <p:column headerText="#{msg['common-title-label']}" 
+                              filterBy="#{artist.title}" 
+                              sortBy="#{artist.title}" 
                               filterStyle="width: 90%;">
-                        <h:outputText value="#{user.username}"/>
-                    </p:column>
-
-                    <p:column headerText="#{msg['user-fullname-label']}" 
-                              filterBy="#{user.fullname}" 
-                              sortBy="#{user.fullname}"
-                              filterStyle="width: 90%">
-                        <h:outputText value="#{user.fullname}"/>
-                    </p:column>
-
-                    <p:column headerText="#{msg['user-email-label']}" 
-                              sortBy="#{user.email}"
-                              filterBy="#{user.email}" 
-                              filterStyle="width: 90%">
-                        <h:outputText value="#{user.email}"/>
-                    </p:column>
-
-                    <p:column headerText="#{msg['user-groups-label']}"
-                              filterBy="#{user.groups}"
-                              filterStyle="width: 90%">
-                        <f:facet name="filter">
-                            <p:selectCheckboxMenu label="#{msg['user-groups-label']}"
-                                                  converter="enumConvertor"
-                                                  onHide="PF('listTable').filter()"
-                                                  panelStyle="width: 150px">
-                                <f:selectItems value="#{userBean.groupSelectItems}"/>
-                            </p:selectCheckboxMenu>
-                        </f:facet>
-                        <ui:repeat value="#{user.groups}" var="group" varStatus="vs">
-                            <h:outputText value="#{group}"/>
-                            <h:outputText value=", " rendered="#{!vs.last}"/>
-                        </ui:repeat>
+                        <h:outputText value="#{artist.title}"/>
                     </p:column>
 
                     <p:column headerText="#{msg['common-description-label']}" 
-                              sortBy="#{user.description}"
-                              filterBy="#{user.description}"
+                              filterBy="#{artist.description}" 
+                              sortBy="#{artist.description}"
                               filterStyle="width: 90%">
-                        <h:outputText value="#{user.description}"/>
+                        <h:outputText value="#{artist.description}"/>
                     </p:column>
 
                     <p:column style="width: 90px" toggleable="false" >
+                        <p:commandButton icon="ui-icon-search" 
+                                         update=":viewDl" 
+                                         immediate="true"
+                                         actionListener="#{artistBean.prepareEntity(artist)}"
+                                         oncomplete="PF('viewDl').show();"/>
+
                         <p:commandButton icon="ui-icon-pencil" 
                                          update=":editDl" 
                                          immediate="true"
-                                         actionListener="#{userBean.prepareEntity(user)}"
+                                         actionListener="#{artistBean.prepareEntity(artist)}"
                                          oncomplete="PF('editDl').show();"/>
 
 
                         <p:commandButton icon="ui-icon-trash" 
-                                         actionListener="#{userBean.remove(user)}"
+                                         actionListener="#{artistBean.remove(artist)}"
                                          immediate="true"
                                          update="@form :growl">
                             <p:confirm header="Confirmation"
-                                       message="#{msg['user-action-delete-confirm-msg']}" 
+                                       message="#{msg['artist-action-delete-confirm-msg']}" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                     </p:column>
