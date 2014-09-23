@@ -10,15 +10,23 @@
                   widgetVar="createDl"
                   modal="true"
                   header="#{msg['singer-dialog-create-title']}">
+            <p:messages id="messages" globalOnly="true"/>
+            <p:panelGrid columns="3" style="width: 100%">
+                <h:form>
+                    <p:outputLabel for="thumbnail" value="Thumbnail"/>
+                    <p:fileUpload id="thumbnail" value="#{singerBean.fileUpload}" fileUploadListener="#{singerBean.fileUploadListener}" mode="advanced" dragDropSupport="false"
+                                  update=":messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    <p:message for="thumbnail"/>
+                </h:form>
+            </p:panelGrid>
 
             <h:form id="createForm">
-                <p:messages globalOnly="true"/>
+
+
+
 
                 <p:panelGrid columns="3" style="width: 100%">
-<!--                    <p:outputLabel for="thumbnail" value="Thumbnail"/>
-                    <p:fileUpload id="thumbnail" value="#{singerBean.fileUpload}" mode="advanced" dragDropSupport="false"
-                                  update=":growl" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
-                    <p:message for="thumbnail"/>-->
+
 
                     <p:outputLabel for="title" value="#{msg['common-title-label']}"/>
                     <p:inputText id="title" value="#{singerBean.current.title}" size="35"/>

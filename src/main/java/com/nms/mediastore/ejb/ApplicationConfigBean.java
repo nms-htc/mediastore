@@ -28,19 +28,19 @@ public class ApplicationConfigBean implements ApplicationConfig {
     
     @PostConstruct
     public void createDefaultUser() {
-        List<User> admins = userService.findAdministrators();
-        if (admins == null || admins.isEmpty()) {
-            User admin = new User();
-            admin.setUsername("admin");
-            admin.setFullname("Administrator");
-            admin.setPassword("admin");
-            List<Group> groups = new ArrayList<>();
-            groups.add(Group.Administrator);
-            admin.setGroups(groups);
-            admin.setEmail("duymb@nms.com.vn");
-            admin.setDescription("Default Administrator User");
-            userService.persist(admin);
-        }
+//        List<User> admins = userService.findAdministrators();
+//        if (admins == null || admins.isEmpty()) {
+//            User admin = new User();
+//            admin.setUsername("admin");
+//            admin.setFullname("Administrator");
+//            admin.setPassword("admin");
+//            List<Group> groups = new ArrayList<>();
+//            groups.add(Group.Administrator);
+//            admin.setGroups(groups);
+//            admin.setEmail("duymb@nms.com.vn");
+//            admin.setDescription("Default Administrator User");
+//            userService.persist(admin);
+//        }
     }
 
 }

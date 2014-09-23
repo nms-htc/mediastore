@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -16,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Named
+@SessionScoped
 public class AuthenticateBean implements Serializable {
 
     private static final long serialVersionUID = -1715559435675319668L;
@@ -23,6 +26,7 @@ public class AuthenticateBean implements Serializable {
     private String username;
     private String password;
     private String originalURL;
+    private User currentUser;
 
     @EJB
     private UserService service;
@@ -50,11 +54,12 @@ public class AuthenticateBean implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-
+        
         try {
             request.login(username, password);
             User user = service.findByUP(username, password);
             externalContext.getSessionMap().put("currentUser", user);
+            currentUser = user;
             externalContext.redirect(originalURL);
         } catch (ServletException e) {
             // handle unknow username/password in request.login()
@@ -86,5 +91,9 @@ public class AuthenticateBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
+    @Produces
+    public User getCurrentUser() {
+        return currentUser;
+    }
 }

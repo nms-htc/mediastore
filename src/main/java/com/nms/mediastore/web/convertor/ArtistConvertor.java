@@ -21,4 +21,11 @@ public class ArtistConvertor extends AbstractEntityConvertor<Artist> {
     protected BaseService<Artist> getBaseService() {
         return service;
     }
+
+    @Override
+    protected Class<Artist> getEntityClass() {
+        return Artist.class;
+    }
+    
+    
 }

@@ -5,6 +5,7 @@
  */
 package com.nms.mediastore.util;
 
+import com.nms.mediastore.entity.BaseEntity;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.io.FilenameUtils;
 
 public class AppConfig implements Serializable {
 
@@ -19,6 +21,11 @@ public class AppConfig implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(AppConfig.class.getName());
     public static final String FILE_PATH = "config.properties";
     public static final String FILE_STORE_PATH_PROPERTY = "filestore.path";
+    public static final String SINGER_FOLDER = "singer";
+    public static final String TOPIC_FOLDER = "topic";
+    public static final String MUSIC_FOLDER = "music";
+    public static final String USER_FOLDER = "user";
+    public static final String ARTIST_FOLDER = "artist";
 
     public static Properties props = null;
 
@@ -36,24 +43,36 @@ public class AppConfig implements Serializable {
         props.load(is);
     }
 
-    public String getFileStorePath() {
+    public static String getFileStorePath() {
         String path = null;
 
         if (props != null) {
             path = props.getProperty(FILE_STORE_PATH_PROPERTY);
         }
-        
+
         if (path == null) {
             path = getDefaultPath();
+        }
+
+        if (!path.endsWith(File.separator)) {
+            path += File.separator;
         }
 
         return path;
     }
 
-    private String getDefaultPath() {
+    private static String getDefaultPath() {
         StringBuilder sb = new StringBuilder(System.getProperty("user.home"));
         sb.append(File.separator);
         sb.append(".mediastorefile").append(File.separator);
+        return sb.toString();
+    }
+
+    public static String getFileUri(Long id, String type, String fileName) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append(type).append(File.separator).append(id)
+                .append(File.separator);
+        sb.append(fileName);
         return sb.toString();
     }
 }

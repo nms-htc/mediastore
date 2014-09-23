@@ -20,4 +20,10 @@ public class ArtistBean extends AbstractBean<Artist> {
     protected BaseService<Artist> getBaseService() {
         return service;
     }
+
+    @Override
+    protected Artist initEntity() {
+        return new Artist();
+    }
+    
 }

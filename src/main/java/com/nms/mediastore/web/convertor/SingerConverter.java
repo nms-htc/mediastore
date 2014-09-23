@@ -21,4 +21,10 @@ public class SingerConverter extends AbstractEntityConvertor<Singer> {
     protected BaseService<Singer> getBaseService() {
         return service;
     }
+
+    @Override
+    protected Class<Singer> getEntityClass() {
+        return Singer.class;
+    }
+    
 }

@@ -182,15 +182,8 @@ public abstract class AbstractBean<T extends BaseEntity> implements Serializable
      *
      * @return new instanse of entity
      */
-    protected T initEntity() {
-        try {
-            return getEntityClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(AbstractBean.class.getName()).log(Level.SEVERE, "Can not instantilize entity.", ex);
-        }
-        return null;
-    }
-
+    protected abstract T initEntity();
+    
     /**
      * Factory method for initilize a new instance of LazyDataModel (Primefaces)
      *
@@ -248,9 +241,5 @@ public abstract class AbstractBean<T extends BaseEntity> implements Serializable
 
     public void setSelectItems(SelectItem[] selectItems) {
         this.selectItems = selectItems;
-    }
-    
-    protected Class<T> getEntityClass() {
-        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 }

@@ -28,6 +28,11 @@ public class UserBean extends AbstractBean<User> {
     protected BaseService<User> getBaseService() {
         return service;
     }
+
+    @Override
+    protected User initEntity() {
+        return new User();
+    }
     
     public void prepareChangePassword(User user) {
         current = user;

@@ -22,4 +22,8 @@ public class TopicConvertor extends AbstractEntityConvertor<Topic> {
         return service;
     }
 
+    @Override
+    protected Class<Topic> getEntityClass() {
+        return Topic.class;
+    }
 }
