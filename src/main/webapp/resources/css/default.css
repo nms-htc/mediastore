@@ -16,6 +16,10 @@
 .ui-chkbox-box {
   /*    vertical-align: bottom;*/ }
 
+.form-label-column {
+  background: #f1f1f1;
+  font-weight: bold; }
+
 /* web style */
 #wrapper {
   width: 960px;

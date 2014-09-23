@@ -5,7 +5,6 @@
  */
 package com.nms.mediastore.util;
 
-import com.nms.mediastore.entity.BaseEntity;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +12,6 @@ import java.io.Serializable;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.io.FilenameUtils;
 
 public class AppConfig implements Serializable {
 
@@ -32,8 +30,8 @@ public class AppConfig implements Serializable {
     static {
         try {
             loadProperties();
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "[AppConfig] can not load 'config.properties'.", e);
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "[AppConfig] Error when try loading the 'config.properties' file.", e);
         }
     }
 

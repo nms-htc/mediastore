@@ -11,7 +11,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class TopicBean extends AbstractBean<Topic> {
+public class TopicBean extends AbstractThumbnailBean<Topic> {
 
     private static final long serialVersionUID = 3377965103066981773L;
 
@@ -28,8 +28,7 @@ public class TopicBean extends AbstractBean<Topic> {
 
     @Override
     protected Topic initEntity() {
-        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         return new Topic();
     }
-    
+
 }

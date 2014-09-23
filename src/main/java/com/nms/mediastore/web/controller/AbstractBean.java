@@ -6,9 +6,6 @@ import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.util.JsfUtil;
 import com.nms.mediastore.util.MessageUtil;
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.model.SelectItem;
 import org.primefaces.model.LazyDataModel;
 

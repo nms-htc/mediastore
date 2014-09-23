@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class MusicBean extends AbstractBean<Music> {
+public class MusicBean extends AbstractThumbnailBean<Music> {
 
     private static final long serialVersionUID = -8912312157585232815L;
 
@@ -30,13 +30,4 @@ public class MusicBean extends AbstractBean<Music> {
         return new Music();
     }
 
-    @Override
-    protected void onBeforePersist() {
-        User user = null;
-        
-        current.setUser(user);
-    }
-    
-    
-    
 }

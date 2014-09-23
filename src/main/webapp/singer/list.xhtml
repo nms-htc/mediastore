@@ -50,6 +50,10 @@
                     <p:column headerText="#{msg['common-index-label']}" width="20" toggleable="false">
                         <h:outputText value="#{index + 1}"/>
                     </p:column>
+                    
+                    <p:column  width="40" toggleable="false">
+                        <h:graphicImage url="/download/img?type=singer&amp;id=#{singer.id}" width="30" height="30"/>
+                    </p:column>
 
                     <p:column headerText="#{msg['common-title-label']}" 
                               filterBy="#{singer.title}" 
@@ -62,7 +66,7 @@
                               filterBy="#{singer.description}" 
                               sortBy="#{singer.description}"
                               filterStyle="width: 90%">
-                        <h:outputText value="#{artist.description}"/>
+                        <h:outputText value="#{singer.description}"/>
                     </p:column>
 
                     <p:column style="width: 90px" toggleable="false" >

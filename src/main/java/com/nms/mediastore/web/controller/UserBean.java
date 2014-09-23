@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class UserBean extends AbstractBean<User> {
+public class UserBean extends AbstractThumbnailBean<User> {
 
     private static final long serialVersionUID = -1150645605262032055L;
 
