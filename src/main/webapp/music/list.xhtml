@@ -52,23 +52,69 @@
                     <p:column headerText="#{msg['common-index-label']}" width="20" toggleable="false">
                         <h:outputText value="#{index + 1}"/>
                     </p:column>
-                    
+
                     <p:column  width="40" toggleable="false">
                         <h:graphicImage url="/download/img?type=music&amp;id=#{music.id}" width="30" height="30"/>
+                    </p:column>
+                    
+                    <p:column headerText="#{msg['music-hot-label']}"
+                              sortBy="#{music.hot}"
+                              width="30"
+                              filterStyle="width: 90%;">
+                        <h:graphicImage library="image" 
+                                        name="hot.png" 
+                                        rendered="#{music.hot}"
+                                        height="25"
+                                        width="25"/>
                     </p:column>
 
                     <p:column headerText="#{msg['common-title-label']}" 
                               filterBy="#{music.title}" 
-                              sortBy="#{music.title}" 
+                              sortBy="#{music.title}"
                               filterStyle="width: 90%;">
                         <h:outputText value="#{music.title}"/>
                     </p:column>
 
-                    <p:column headerText="#{msg['common-description-label']}" 
-                              filterBy="#{music.description}" 
-                              sortBy="#{music.description}"
-                              filterStyle="width: 90%">
-                        <h:outputText value="#{music.description}"/>
+                    <p:column headerText="#{msg['music-artist-label']}" 
+                              filterBy="#{music.artist}" 
+                              filterStyle="width: 90%;">
+                        <f:facet name="filter">
+                            <p:selectOneMenu  converter="artistConvertor"
+                                              onchange="PF('listTable').filter()">
+                                <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
+                                <f:selectItems value="#{artistBean.selectItems}"/>
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{music.artist.title}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['music-singer-label']}" 
+                              filterBy="#{music.singer}" 
+                              filterStyle="width: 90%;">
+                        <f:facet name="filter">
+                            <p:selectOneMenu  converter="singerConvertor"
+                                              onchange="PF('listTable').filter()">
+                                <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
+                                <f:selectItems value="#{singerBean.selectItems}"/>
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{music.singer.title}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['music-topics-label']}" 
+                              filterStyle="width: 90%;">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu label="#{msg['music-topics-label']}"  
+                                                  converter="topicConvertor"
+                                                  filter="true"
+                                                  onHide="PF('listTable').filter()">
+                                <f:selectItems value="#{topicBean.selectItems}"/>
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <ui:repeat value="#{music.topics}" var="topic" varStatus="vs">
+                            <h:outputText value="#{topic.title}"/>
+                            <h:outputText value=", " rendered="#{!vs.last}"/>
+                        </ui:repeat>
                     </p:column>
 
                     <p:column style="width: 90px" toggleable="false" >

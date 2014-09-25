@@ -14,6 +14,10 @@ public abstract class AbstractThumbnailBean<T extends ThumbnailEntity> extends A
     public void thumbnailUploadListener(FileUploadEvent event) {
         try {
             FileEntry file = current.getThumbnail();
+            if (file == null) {
+                file = new FileEntry();
+                current.setThumbnail(file);
+            }
             file.setContentType(event.getFile().getContentType());
             file.setName(event.getFile().getFileName());
             file.setSize(event.getFile().getSize());

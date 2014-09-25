@@ -4,7 +4,6 @@ import com.nms.mediastore.entity.FileEntry;
 import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.service.MusicService;
 import com.nms.mediastore.entity.Music;
-import com.nms.mediastore.entity.User;
 import com.nms.mediastore.util.MessageUtil;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -33,11 +32,15 @@ public class MusicBean extends AbstractThumbnailBean<Music> {
     protected Music initEntity() {
         return new Music();
     }
-    
+
     /* upload thumbnail listener */
     public void musicUploadListener(FileUploadEvent event) {
         try {
-            FileEntry file = current.getThumbnail();
+            FileEntry file = current.getMusicFile();
+            if (file == null) {
+                file = new FileEntry();
+                current.setMusicFile(file);
+            }
             file.setContentType(event.getFile().getContentType());
             file.setName(event.getFile().getFileName());
             file.setSize(event.getFile().getSize());

@@ -21,9 +21,6 @@ public abstract class ThumbnailEntity extends BaseEntity {
     protected FileEntry thumbnail;
 
     public FileEntry getThumbnail() {
-        if (thumbnail == null) {
-            thumbnail = new FileEntry();
-        }
         return thumbnail;
     }
 

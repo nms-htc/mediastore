@@ -1,8 +1,11 @@
 package com.nms.mediastore.entity;
 
-import java.util.Set;
+import java.util.List;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
@@ -36,8 +39,15 @@ public class Music extends ThumbnailEntity {
 
     @ManyToMany
     @JoinTable(name = "MS_MUSICTOPIC")
-    protected Set<Topic> topics;
+    protected List<Topic> topics;
     
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "name", column = @Column(name = "MUSIC_FILENAME")),
+        @AttributeOverride(name = "contentType", column = @Column(name = "MUSIC_CONTENTTYPE")),
+        @AttributeOverride(name = "uri", column = @Column(name = "MUSIC_URI")),
+        @AttributeOverride(name = "fileSize", column = @Column(name = "MUSIC_FILESIZE"))
+    })
     protected FileEntry musicFile;
 
     public Music() {
@@ -75,11 +85,11 @@ public class Music extends ThumbnailEntity {
         this.singer = singer;
     }
 
-    public Set<Topic> getTopics() {
+    public List<Topic> getTopics() {
         return topics;
     }
 
-    public void setTopics(Set<Topic> topics) {
+    public void setTopics(List<Topic> topics) {
         this.topics = topics;
     }
 
