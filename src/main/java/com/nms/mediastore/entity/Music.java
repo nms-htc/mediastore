@@ -20,23 +20,25 @@ public class Music extends ThumbnailEntity {
     private static final long serialVersionUID = 3721867941446196307L;
 
     @Column(name = "ISHOT")
-    private Boolean hot;
+    protected Boolean hot;
 
     @ManyToOne
     @JoinColumn(name = "ARTISTID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Artist artist;
+    protected Artist artist;
 
     @ManyToOne
     @JoinColumn(name = "USERID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private User user;
+    protected User user;
 
     @ManyToOne
     @JoinColumn(name = "SINGERID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Singer singer;
+    protected Singer singer;
 
     @ManyToMany
     @JoinTable(name = "MS_MUSICTOPIC")
-    private Set<Topic> topics;
+    protected Set<Topic> topics;
+    
+    protected FileEntry musicFile;
 
     public Music() {
     }
@@ -79,5 +81,13 @@ public class Music extends ThumbnailEntity {
 
     public void setTopics(Set<Topic> topics) {
         this.topics = topics;
+    }
+
+    public FileEntry getMusicFile() {
+        return musicFile;
+    }
+
+    public void setMusicFile(FileEntry musicFile) {
+        this.musicFile = musicFile;
     }
 }

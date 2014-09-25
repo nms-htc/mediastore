@@ -10,14 +10,22 @@
                   modal="true"
                   draggable="false"
                   header="#{msg['singer-dialog-view-title']}">
-            <p:panelGrid columns="2" style="width: 100%;">
-                <h:outputText value="#{msg['common-title-label']}"/>
-                <h:outputText value="#{singerBean.current.title}"/>
-
-                <h:outputText value="#{msg['common-description-label']}"/>
-                <h:outputText value="#{singerBean.current.description}"/>
-            </p:panelGrid>
+            
+            <h:panelGrid columns="2">
+                
+                <h:graphicImage url="/download/img?type=singer&amp;id=#{singerBean.current.id}"
+                                width="150"/>
+                
+                <p:panelGrid columns="2" columnClasses="form-label-column">
+                    <h:outputText value="#{msg['common-title-label']}"/>
+                    <h:outputText value="#{singerBean.current.title}"/>
+                    
+                    <h:outputText value="#{msg['common-description-label']}"/>
+                    <h:outputText value="#{singerBean.current.description}"/>
+                </p:panelGrid>
+                
+            </h:panelGrid>
+            
         </p:dialog>
     </ui:composition>
 </html>
-

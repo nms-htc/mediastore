@@ -9,27 +9,44 @@
         <p:dialog id="createDl"
                   widgetVar="createDl"
                   modal="true"
+                  width="600"
                   header="#{msg['topic-dialog-create-title']}">
 
-            <h:form id="createForm">
-                <p:messages globalOnly="true"/>
+            <p:messages id="createMessages" globalOnly="true"/>
 
-                <p:panelGrid columns="3" style="width: 100%">
-                    <p:outputLabel for="title" value="#{msg['common-title-label']}"/>
-                    <p:inputText id="title" value="#{topicBean.current.title}" size="35"/>
-                    <p:message for="title"/>
+            <p:panel header="#{msg['common-panel-image-upload-label']}">
+                <h:form>
+                    <p:fileUpload id="thumbnail" 
+                                  fileUploadListener="#{topicBean.thumbnailUploadListener}" 
+                                  mode="advanced" 
+                                  dragDropSupport="false"
+                                  update=":createMessages :growl" 
+                                  sizeLimit="100000" 
+                                  fileLimit="3" 
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                </h:form>
+            </p:panel>
+            <p:spacer height="5px"/>
+            <p:panel header="#{msg['topic-panel-detail-label']}">
+                <h:form id="createForm">
+                    <p:panelGrid columns="3" style="width: 100%" columnClasses="form-label-column">
+                        <p:outputLabel for="title" value="#{msg['common-title-label']}"/>
+                        <p:inputText id="title" value="#{topicBean.current.title}" size="35"
+                                     required="true" requiredMessage="#{msg['common-title-required-message']}"/>
+                        <p:message for="title"/>
 
-                    <p:outputLabel for="description" value="#{msg['common-description-label']}"/>
-                    <p:inputTextarea id="description" cols="35" rows="10" value="#{topicBean.current.description}"/>
-                    <p:message for="description"/>
-
-                    <f:facet name="footer">
-                        <p:commandButton value="#{msg['save']}" actionListener="#{topicBean.persist()}" update="createForm :listForm"/>
-                        <p:commandButton value="#{msg['cancel']}" type="button" onclick="PF('createDl').hide();"/>
-                    </f:facet>
-                </p:panelGrid>
-            </h:form>
+                        <p:outputLabel for="description" value="#{msg['common-description-label']}"/>
+                        <p:inputTextarea id="description" cols="37" rows="10" value="#{topicBean.current.description}"/>
+                        <p:message for="description"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="#{msg['save']}"
+                                             actionListener="#{topicBean.persist()}"
+                                             update="createForm :listForm :createMessages :growl"/>
+                            <p:commandButton value="#{msg['cancel']}" type="button" onclick="PF('createDl').hide();"/>
+                        </f:facet>
+                    </p:panelGrid>
+                </h:form>
+            </p:panel>
         </p:dialog>
     </ui:composition>
 </html>
-

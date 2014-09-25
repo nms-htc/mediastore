@@ -23,24 +23,24 @@ public abstract class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
-    private Long id;
+    protected Long id;
     
     @Size(max = 150)
     @Column(name = "TITLE")
-    private String title;
+    protected String title;
     
     @Size(max = 2000)
     @Column(name = "DESCRIPTION")
-    private String description;
+    protected String description;
     
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATEDDATE")
-    private Date createdDate;
+    protected Date createdDate;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "MODIFIEDDATE")
-    private Date modifiedDate;
+    protected Date modifiedDate;
 
     public BaseEntity() {
     }

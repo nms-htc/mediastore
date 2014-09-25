@@ -3,21 +3,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
         <p:dialog id="viewDl"
                   widgetVar="viewDl"
                   modal="true"
                   draggable="false"
                   header="#{msg['music-dialog-view-title']}">
-            <p:panelGrid columns="2" style="width: 100%;">
-                <h:outputText value="#{msg['common-title-label']}"/>
-                <h:outputText value="#{musicBean.current.title}"/>
+            <h:panelGrid columns="2">
 
-                <h:outputText value="#{msg['common-description-label']}"/>
-                <h:outputText value="#{musicBean.current.description}"/>
-            </p:panelGrid>
+                <h:graphicImage url="/download/img?type=music&amp;id=#{musicBean.current.id}"
+                                width="150"/>
+
+                <p:panelGrid columns="2" columnClasses="form-label-column">
+
+                    <h:outputText value="#{msg['common-title-label']}"/>
+                    <h:outputText value="#{musicBean.current.title}"/>
+                    
+                    <h:outputText value="#{msg['music-artist-label']}"/>
+                    <h:outputText value="#{musicBean.current.artist.title}"/>
+                    
+                    <h:outputText value="#{msg['music-singer-label']}"/>
+                    <h:outputText value="#{musicBean.current.singer.title}"/>
+                    
+                    <h:outputText value="#{msg['music-topics-label']}"/>
+                    <p:dataList value="#{musicBean.current.topics}" var="topic">
+                        <h:outputText value="#{topic.title}"/>
+                    </p:dataList>
+
+                    <h:outputText value="#{msg['common-description-label']}"/>
+                    <h:outputText value="#{musicBean.current.description}"/>
+                </p:panelGrid>
+
+            </h:panelGrid>
+
         </p:dialog>
     </ui:composition>
 </html>
-

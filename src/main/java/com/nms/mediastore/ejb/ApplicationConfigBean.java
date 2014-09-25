@@ -1,12 +1,7 @@
 package com.nms.mediastore.ejb;
 
-import com.nms.mediastore.entity.Group;
-import com.nms.mediastore.entity.User;
 import com.nms.mediastore.service.ApplicationConfig;
 import com.nms.mediastore.service.UserService;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.ConcurrencyManagement;

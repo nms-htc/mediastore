@@ -18,7 +18,7 @@ public abstract class ThumbnailEntity extends BaseEntity {
         @AttributeOverride(name = "uri", column = @Column(name = "THUMBNAIL_URI")),
         @AttributeOverride(name = "fileSize", column = @Column(name = "THUMBNAIL_FILESIZE"))
     })
-    private FileEntry thumbnail;
+    protected FileEntry thumbnail;
 
     public FileEntry getThumbnail() {
         if (thumbnail == null) {

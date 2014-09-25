@@ -17,7 +17,7 @@ public class MusicLink extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "MUSICID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Music music;
+    protected Music music;
 
     public MusicLink() {
     }

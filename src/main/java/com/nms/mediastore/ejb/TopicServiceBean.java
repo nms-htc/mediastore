@@ -11,28 +11,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.apache.commons.io.FileUtils;
 
 @Stateless
-public class TopicServiceBean extends AbstractService<Topic> implements TopicService {
+public class TopicServiceBean extends AbstractThumbnailService<Topic> implements TopicService {
 
     private static final long serialVersionUID = -3895208240070641207L;
     private static final Logger LOGGER = Logger.getLogger(TopicService.class.getName());
-    
-    @PersistenceContext
-    private EntityManager em;
 
     public TopicServiceBean() {
         super(Topic.class);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
     @Override
     protected void onAfterPersist(Topic entity) {
         super.onBeforePersist(entity);
@@ -49,6 +39,16 @@ public class TopicServiceBean extends AbstractService<Topic> implements TopicSer
                 throw new EJBException("file-can-not-store");
             }
         }
+    }
+
+    @Override
+    protected String getFolderName() {
+        return AppConfig.TOPIC_FOLDER;
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return LOGGER;
     }
 
 }

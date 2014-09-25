@@ -1,14 +1,15 @@
 package com.nms.mediastore.ejb;
 
 import com.nms.mediastore.entity.BaseEntity;
-import com.nms.mediastore.entity.ThumbnailEntity;
 import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -30,7 +31,9 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
     private static final long serialVersionUID = 8144780304797677034L;
     private static final Logger LOGGER = Logger.getLogger(BaseService.class.getName());
 
-    protected abstract EntityManager getEntityManager();
+    @PersistenceContext
+    protected EntityManager em;
+    
     private final Class<T> entityClass;
 
     public AbstractService(Class<T> entityClass) {
@@ -39,24 +42,24 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
 
     @Override
     public T find(Long id) {
-        return getEntityManager().find(entityClass, id);
+        return em.find(entityClass, id);
     }
 
     @Override
     public List<T> findAll() {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(entityClass);
         cq.select(cq.from(entityClass));
-        TypedQuery<T> q = getEntityManager().createQuery(cq);
+        TypedQuery<T> q = em.createQuery(cq);
         return q.getResultList();
     }
 
     @Override
     public int countAll() {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         cq.select(cb.count(cq.from(entityClass)));
-        TypedQuery<Long> q = getEntityManager().createQuery(cq);
+        TypedQuery<Long> q = em.createQuery(cq);
         return q.getSingleResult().intValue();
     }
 
@@ -67,14 +70,14 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
     /* Callback method */
     protected void onAfterPersist(T entity) {
         BaseEntity baseEntity = (BaseEntity) entity;
-        LOGGER.info("[BaseService] has persisted entity with ID = " + baseEntity.getId());
+        LOGGER.log(Level.INFO, "[BaseService] has persisted entity with ID = {0}", baseEntity.getId());
     }
 
     @Override
     public T persist(T entity) {
         onBeforePersist(entity);
-        getEntityManager().persist(entity);
-        getEntityManager().flush();
+        em.persist(entity);
+        em.flush();
         onAfterPersist(entity);
         return entity;
     }
@@ -90,7 +93,7 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
     @Override
     public T update(T entity) {
         onBeforeUpdate(entity);
-        getEntityManager().merge(entity);
+        em.merge(entity);
         onAfterUpdate(entity);
         return entity;
     }
@@ -106,13 +109,13 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
     @Override
     public void remove(T entity) {
         onBeforeRemove(entity);
-        getEntityManager().remove(getEntityManager().merge(entity));
+        em.remove(em.merge(entity));
         onAfterRemove(entity);
     }
 
     @Override
     public int countForPFDatatable(Map<String, Object> filters) {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<T> root = cq.from(entityClass);
         cq.select(cb.count(root));
@@ -123,14 +126,14 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
             cq.where(predicates.toArray(new Predicate[]{}));
         }
 
-        TypedQuery<Long> q = getEntityManager().createQuery(cq);
+        TypedQuery<Long> q = em.createQuery(cq);
         return q.getSingleResult().intValue();
     }
 
     @Override
     public List<T> searchForPFDatatable(int start, int range, String sortField,
             SortOrder sortOrder, Map<String, Object> filters) {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(entityClass);
         Root<T> root = cq.from(entityClass);
         cq.select(root);
@@ -147,7 +150,7 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
             cq.orderBy(order);
         }
 
-        TypedQuery<T> q = getEntityManager().createQuery(cq);
+        TypedQuery<T> q = em.createQuery(cq);
 
         q.setFirstResult(start);
         q.setMaxResults(range);
@@ -164,10 +167,10 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
                 predicates.add(predicate);
             }
         }
-        
+
         return predicates;
     }
-    
+
     protected Predicate buildCondition(Map.Entry<String, Object> entry, Root<T> root, CriteriaBuilder cb) {
         return cb.equal(root.get(entry.getKey()), entry.getValue());
     }

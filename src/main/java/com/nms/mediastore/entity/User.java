@@ -34,33 +34,29 @@ public class User extends ThumbnailEntity {
     @NotNull
     @Size(max = 75)
     @Column(name = "USERNAME", unique = true)
-    private String username;
+    protected String username;
 
     @NotNull
     @Column(name = "FULLNAME")
     @Size(max = 100)
-    private String fullname;
+    protected String fullname;
 
     @NotNull
     @Size(max = 150)
     @Column(name = "PASSWORD")
-    private String password;
-
-    @Size(max = 150)
-    @Column(name = "SALT")
-    private String salt;
+    protected String password;
 
     @NotNull
     @Size(max = 200)
     @Column(name = "EMAIL", unique = true)
-    private String email;
+    protected String email;
 
     @ElementCollection(targetClass = Group.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "MS_USERGROUP", joinColumns = {
         @JoinColumn(name = "USERID")})
     @Column(name = "GROUPNAME")
-    private List<Group> groups;
+    protected List<Group> groups;
 
     public User() {
     }
@@ -87,14 +83,6 @@ public class User extends ThumbnailEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     public String getEmail() {

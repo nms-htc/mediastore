@@ -1,15 +1,12 @@
 package com.nms.mediastore.ejb;
 
 import com.nms.mediastore.entity.BaseEntity_;
-import com.nms.mediastore.entity.FileEntry;
 import com.nms.mediastore.service.UserService;
 import com.nms.mediastore.entity.Group;
 import com.nms.mediastore.entity.User;
 import com.nms.mediastore.entity.User_;
 import com.nms.mediastore.util.AppConfig;
 import com.nms.mediastore.util.Validator;
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,32 +16,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.xml.bind.DatatypeConverter;
-import org.apache.commons.io.FileUtils;
 
 @Stateless
-public class UserServiceBean extends AbstractService<User> implements UserService {
+public class UserServiceBean extends AbstractThumbnailService<User> implements UserService {
 
     private static final long serialVersionUID = 459455862821896874L;
     private static final Logger LOGGER = Logger.getLogger(UserServiceBean.class.getName());
 
-    @PersistenceContext
-    private EntityManager em;
-
     public UserServiceBean() {
         super(User.class);
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
     }
 
     @Override
@@ -179,22 +165,14 @@ public class UserServiceBean extends AbstractService<User> implements UserServic
 
         return admins;
     }
-    
+
     @Override
-    protected void onAfterPersist(User entity) {
-        super.onBeforePersist(entity);
-        FileEntry thumbnail = entity.getThumbnail();
-        if (thumbnail != null && Validator.isNotNull(thumbnail.getName()) && thumbnail.getInputStream() != null) {
-            try {
-                String uri = AppConfig.getFileUri(entity.getId(), AppConfig.USER_FOLDER, thumbnail.getName());
-                thumbnail.setUri(uri);
-                File out = new File(AppConfig.getFileStorePath() + uri);
-                FileUtils.copyInputStreamToFile(thumbnail.getInputStream(), out);
-                em.merge(entity);
-            } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, "Error saving thumbnail", ex);
-                throw new EJBException("file-can-not-store");
-            }
-        }
+    protected String getFolderName() {
+        return AppConfig.USER_FOLDER;
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return LOGGER;
     }
 }

@@ -26,7 +26,9 @@
                                          immediate="true" 
                                          actionListener="#{artistBean.resetEntity()}"
                                          update=":createDl"
-                                         oncomplete="PF('createDl').show();"/>
+                                         oncomplete="PF('createDl').show();">
+                            <p:resetInput target=":createForm"/>
+                        </p:commandButton>
 
                     </f:facet>
                 </p:toolbar>
@@ -49,6 +51,10 @@
 
                     <p:column headerText="#{msg['common-index-label']}" width="20" toggleable="false">
                         <h:outputText value="#{index + 1}"/>
+                    </p:column>
+                    
+                    <p:column  width="40" toggleable="false">
+                        <h:graphicImage url="/download/img?type=artist&amp;id=#{artist.id}" width="30" height="30"/>
                     </p:column>
 
                     <p:column headerText="#{msg['common-title-label']}" 
@@ -93,4 +99,3 @@
         </ui:define>
     </ui:composition>
 </html>
-
