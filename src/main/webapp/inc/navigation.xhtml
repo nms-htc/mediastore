@@ -9,22 +9,27 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
-    
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
     <div id='cssmenu'>
         <ul>
             <li class="#{current == null ? 'active' : null}"><h:link outcome="/index"><span>#{msg['home-page']}</span></h:link></li>
-            <li class="has-sub #{current == 'music' ? 'active' : null}"><a href='javascript:void(0);'><span>#{msg['music']}</span></a>
-                <ul>
-                    <li><h:link outcome="/music/list"><span>#{msg['music']}</span></h:link></li>
-                    <li><h:link outcome="/topic/list"><span>#{msg['music-topic']}</span></h:link></li>
-                    <li><h:link outcome="/artist/list"><span>#{msg['artist']}</span></h:link></li>
-                    <li class='last'><h:link outcome="/singer/list"><span>#{msg['singer']}</span></h:link></li>
-                </ul>
-            </li>
-            <li class="last #{current == 'user' ? 'active' : null}"><h:link outcome="/user/list"><span>#{msg['user-manager']}</span></h:link></li>
+            <c:if test="#{request.isUserInRole('Administrator') or request.isUserInRole('Cp')}">
+                <li class="has-sub #{current == 'music' ? 'active' : null} #{request.isUserInRole('Administrator') ? null : 'last'}"><a href='javascript:void(0);'><span>#{msg['music']}</span></a>
+                    <ul>
+                        <li><h:link outcome="/music/list"><span>#{msg['music']}</span></h:link></li>
+                        <li><h:link outcome="/topic/list"><span>#{msg['music-topic']}</span></h:link></li>
+                        <li><h:link outcome="/artist/list"><span>#{msg['artist']}</span></h:link></li>
+                        <li class='last'><h:link outcome="/singer/list"><span>#{msg['singer']}</span></h:link></li>
+                    </ul>
+                </li>
+            </c:if>
+            <c:if test="#{request.isUserInRole('Administrator')}">
+                <li class="last #{current == 'user' ? 'active' : null}"><h:link outcome="/user/list"><span>#{msg['user-manager']}</span></h:link></li>
+            </c:if>
         </ul>
     </div>
-    
+
 </ui:composition>
 

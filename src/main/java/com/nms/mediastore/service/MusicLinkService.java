@@ -6,6 +6,7 @@
 package com.nms.mediastore.service;
 
 import com.nms.mediastore.entity.MusicLink;
+import java.util.List;
 
 /**
  *
@@ -13,6 +14,8 @@ import com.nms.mediastore.entity.MusicLink;
  */
 public interface MusicLinkService extends BaseService<MusicLink> {
 
-    public String generateMusicLink(Long musicId);
+    public List<String> getHotMusicLink();
+    
+    public MusicLink findByUUID(String uuid);
 
 }

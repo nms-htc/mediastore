@@ -71,8 +71,8 @@ public abstract class AbstractBean<T extends BaseEntity> implements Serializable
      * Persist entity to db
      */
     public void persist() {
-        onBeforePersist();
         try {
+            onBeforePersist();
             getBaseService().persist(current);
             onPersistSuccess();
         } catch (Exception e) {
@@ -113,8 +113,8 @@ public abstract class AbstractBean<T extends BaseEntity> implements Serializable
      * Update entity and save to db
      */
     public void update() {
-        onBeforeUpdate();
         try {
+            onBeforeUpdate();
             getBaseService().update(current);
             onSuccessUpdate();
         } catch (Exception e) {

@@ -4,10 +4,13 @@ import com.nms.mediastore.entity.FileEntry;
 import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.service.MusicService;
 import com.nms.mediastore.entity.Music;
+import com.nms.mediastore.entity.User;
 import com.nms.mediastore.util.MessageUtil;
 import java.io.IOException;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 
@@ -19,6 +22,8 @@ public class MusicBean extends AbstractThumbnailBean<Music> {
 
     @EJB
     private MusicService service;
+    @Inject
+    private User currentUser;
 
     public MusicBean() {
     }
@@ -51,4 +56,13 @@ public class MusicBean extends AbstractThumbnailBean<Music> {
         }
     }
 
+    @Override
+    protected void onBeforePersist() {
+        super.onBeforePersist();
+        current.setUser(currentUser);
+        if (current.getMusicFile() == null) {
+            FacesContext.getCurrentInstance().validationFailed();
+            throw new RuntimeException("music-file-is-required");
+        }
+    }
 }

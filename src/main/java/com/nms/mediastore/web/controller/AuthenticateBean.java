@@ -16,6 +16,7 @@ import javax.inject.Named;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 @Named
 @SessionScoped
@@ -23,7 +24,9 @@ public class AuthenticateBean implements Serializable {
 
     private static final long serialVersionUID = -1715559435675319668L;
 
+    @NotNull
     private String username;
+    @NotNull
     private String password;
     private String originalURL;
     private User currentUser;

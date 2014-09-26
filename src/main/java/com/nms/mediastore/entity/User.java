@@ -33,28 +33,28 @@ public class User extends ThumbnailEntity {
 
     @NotNull
     @Size(max = 75)
-    @Column(name = "USERNAME", unique = true)
+    @Column(name = "USERNAME", unique = true, length = 75)
     protected String username;
 
     @NotNull
-    @Column(name = "FULLNAME")
+    @Column(name = "FULLNAME", length = 100)
     @Size(max = 100)
     protected String fullname;
 
     @NotNull
     @Size(max = 150)
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", length = 150)
     protected String password;
 
     @NotNull
     @Size(max = 200)
-    @Column(name = "EMAIL", unique = true)
+    @Column(name = "EMAIL", unique = true, length = 200)
     protected String email;
 
     @ElementCollection(targetClass = Group.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "MS_USERGROUP", joinColumns = {
-        @JoinColumn(name = "USERID")})
+        @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")})
     @Column(name = "GROUPNAME")
     protected List<Group> groups;
 

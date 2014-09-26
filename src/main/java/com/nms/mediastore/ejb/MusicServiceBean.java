@@ -3,9 +3,16 @@ package com.nms.mediastore.ejb;
 import com.nms.mediastore.entity.FileEntry;
 import com.nms.mediastore.service.MusicService;
 import com.nms.mediastore.entity.Music;
+import com.nms.mediastore.entity.Music_;
 import java.util.logging.Logger;
 import com.nms.mediastore.util.AppConfig;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 
 @Stateless
 public class MusicServiceBean extends AbstractThumbnailService<Music> implements MusicService {
@@ -48,6 +55,23 @@ public class MusicServiceBean extends AbstractThumbnailService<Music> implements
         saveFile(entity.getId(), musicFile, true);
         // update entity
         em.merge(entity);
+    }
+
+    @Override
+    public List<Music> getHotMusic(int count) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Music> cq = cb.createQuery(Music.class);
+        Root<Music> root = cq.from(Music.class);
+        cq.select(root);
+        
+        cq.orderBy(new Order[] {
+            cb.desc(root.get(Music_.hot)),
+            cb.desc(root.get(Music_.modifiedDate))
+        });
+        
+        TypedQuery<Music> q = em.createQuery(cq);
+        q.setMaxResults(count);
+        return q.getResultList();
     }
     
 }

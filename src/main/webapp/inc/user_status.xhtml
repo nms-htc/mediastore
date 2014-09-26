@@ -12,14 +12,14 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <div id="user-status">
-<!--        <h:panelGrid columns="2" cellpadding="7" rendered="#{request.remoteUser != null}">
+        <h:panelGrid columns="2" cellpadding="7" rendered="#{request.remoteUser != null}">
             <h:outputFormat styleClass="greeting" value="#{msg['greeting-message']}">
-                <f:param value="#{user.fullname}"/> 
+                <f:param value="#{currentUser.fullname}"/> 
             </h:outputFormat>
             <h:form>
-                <p:commandButton value="#{msg['logout']}" actionListener="#{authCtl.logout()}"/>
+                <p:commandButton value="#{msg['logout']}" actionListener="#{authenticateBean.logout()}"/>
             </h:form>
-        </h:panelGrid>-->
+        </h:panelGrid>
     </div>
 </ui:composition>
 
