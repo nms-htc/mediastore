@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.nms.mediastore.ejb.ws;
 
 import com.nms.mediastore.entity.Music;
@@ -48,7 +43,7 @@ public class MsServiceImpl implements MsService {
                 timeUnit = Calendar.DATE;
                 break;
         }
-        String[] links = new String[count];
+        String[] links = null;
         if (count > 0) {
             ServletContext servletContext = (ServletContext) context
                     .getMessageContext().get(MessageContext.SERVLET_CONTEXT);
@@ -56,6 +51,7 @@ public class MsServiceImpl implements MsService {
 
             try {
                 musics = musicService.getHotMusic(count);
+                links = new String[musics.size()];
             } catch (Exception ex) {
                 throw new Exception("Error when get hot music with count = " + count, ex);
             }

@@ -1,7 +1,5 @@
 package com.nms.mediastore.servlet;
 
-import com.nms.mediastore.entity.Music;
-import com.nms.mediastore.entity.ThumbnailEntity;
 import com.nms.mediastore.service.ArtistService;
 import com.nms.mediastore.service.MusicService;
 import com.nms.mediastore.service.SingerService;
@@ -9,17 +7,13 @@ import com.nms.mediastore.service.TopicService;
 import com.nms.mediastore.service.UserService;
 import com.nms.mediastore.util.Validator;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
-import javax.servlet.ReadListener;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

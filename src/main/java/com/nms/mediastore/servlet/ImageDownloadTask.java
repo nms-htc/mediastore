@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.nms.mediastore.servlet;
 
 import com.nms.mediastore.entity.FileEntry;
@@ -48,16 +43,21 @@ public class ImageDownloadTask<T extends ThumbnailEntity> implements Runnable {
         ThumbnailEntity entity = service.find(id);
         FileEntry file = entity.getThumbnail();
         File in;
-        if (Validator.isNotNull(file.getUri()) && Validator.isNotNull(file.getName())) {
+        if (file != null && Validator.isNotNull(file.getUri()) && Validator.isNotNull(file.getName())) {
             response.setContentType(file.getContentType());
             response.setContentLengthLong(file.getSize());
             response.setHeader("Content-Disposition", "inline;filename=\"" + file.getName() + "\"");
             String path = AppConfig.getFileStorePath() + file.getUri();
             in = new File(path);
         } else {
-            in = new File(servletContext.getRealPath("/resources/image/male-faces.png"));
+            String type = asyncContext.getRequest().getParameter("type");
+            if (type.equals("music")) {
+                in = new File(servletContext.getRealPath("/resources/image/mp3.png"));
+            } else {
+                in = new File(servletContext.getRealPath("/resources/image/male-faces.png"));
+            }
         }
-        
+
         try (OutputStream out = response.getOutputStream()) {
             FileUtils.copyFile(in, out);
         } catch (IOException ex) {

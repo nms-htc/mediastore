@@ -27,7 +27,7 @@ public class Music extends ThumbnailEntity {
 
     @ManyToOne
     @JoinColumn(name = "ARTISTID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    protected Artist artist;
+    protected Artist writer;
 
     @ManyToOne
     @JoinColumn(name = "USERID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -35,7 +35,7 @@ public class Music extends ThumbnailEntity {
 
     @ManyToOne
     @JoinColumn(name = "SINGERID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    protected Singer singer;
+    protected Artist singer;
 
     @ManyToMany
     @JoinTable(name = "MS_MUSICTOPIC")
@@ -69,19 +69,19 @@ public class Music extends ThumbnailEntity {
         this.user = user;
     }
 
-    public Artist getArtist() {
-        return artist;
+    public Artist getWriter() {
+        return writer;
     }
 
-    public void setArtist(Artist artist) {
-        this.artist = artist;
+    public void setWriter(Artist writer) {
+        this.writer = writer;
     }
 
-    public Singer getSinger() {
+    public Artist getSinger() {
         return singer;
     }
 
-    public void setSinger(Singer singer) {
+    public void setSinger(Artist singer) {
         this.singer = singer;
     }
 

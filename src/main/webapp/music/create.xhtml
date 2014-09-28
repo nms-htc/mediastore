@@ -58,9 +58,9 @@
                         <p:selectBooleanCheckbox id="hot" value="#{musicBean.current.hot}"/>
                         <p:message for="hot"/>
                         
-                        <p:outputLabel for="artist" value="#{msg['music-artist-label']}"/>
+                        <p:outputLabel for="artist" value="#{msg['music-writer-label']}"/>
                         <p:selectOneMenu id="artist" 
-                                         value="#{musicBean.current.artist}"
+                                         value="#{musicBean.current.writer}"
                                          converter="artistConvertor">
                             <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
                             <f:selectItems value="#{artistBean.selectItems}"/>
@@ -70,9 +70,9 @@
                         <p:outputLabel for="singer" value="#{msg['music-singer-label']}"/>
                         <p:selectOneMenu id="singer" 
                                          value="#{musicBean.current.singer}"
-                                         converter="singerConvertor">
+                                         converter="artistConvertor">
                             <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
-                            <f:selectItems value="#{singerBean.selectItems}"/>
+                            <f:selectItems value="#{artistBean.selectItems}"/>
                         </p:selectOneMenu>
                         <p:message for="singer"/>
                         

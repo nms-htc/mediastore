@@ -53,10 +53,6 @@
     <security-constraint>
         <display-name>CP Restric</display-name>
         <web-resource-collection>
-            <web-resource-name>Singer</web-resource-name>
-            <url-pattern>/singer/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
             <web-resource-name>Artist</web-resource-name>
             <url-pattern>/artist/*</url-pattern>
         </web-resource-collection>

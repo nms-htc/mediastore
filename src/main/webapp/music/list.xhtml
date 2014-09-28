@@ -75,8 +75,8 @@
                         <h:outputText value="#{music.title}"/>
                     </p:column>
 
-                    <p:column headerText="#{msg['music-artist-label']}" 
-                              filterBy="#{music.artist}" 
+                    <p:column headerText="#{msg['music-writer-label']}" 
+                              filterBy="#{music.writer}" 
                               filterStyle="width: 90%;">
                         <f:facet name="filter">
                             <p:selectOneMenu  converter="artistConvertor"
@@ -85,17 +85,17 @@
                                 <f:selectItems value="#{artistBean.selectItems}"/>
                             </p:selectOneMenu>
                         </f:facet>
-                        <h:outputText value="#{music.artist.title}"/>
+                        <h:outputText value="#{music.writer.title}"/>
                     </p:column>
 
                     <p:column headerText="#{msg['music-singer-label']}" 
                               filterBy="#{music.singer}" 
                               filterStyle="width: 90%;">
                         <f:facet name="filter">
-                            <p:selectOneMenu  converter="singerConvertor"
+                            <p:selectOneMenu  converter="artistConvertor"
                                               onchange="PF('listTable').filter()">
                                 <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
-                                <f:selectItems value="#{singerBean.selectItems}"/>
+                                <f:selectItems value="#{artistBean.selectItems}"/>
                             </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{music.singer.title}"/>
