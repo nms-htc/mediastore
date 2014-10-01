@@ -63,18 +63,36 @@
                         <p:outputLabel for="artist" value="#{msg['music-writer-label']}"/>
                         <p:selectOneMenu id="artist" 
                                          value="#{musicBean.current.writer}"
-                                         converter="artistConvertor">
+                                         converter="artistConvertor"
+                                         effect="fade" var="t" style="width:160px" 
+                                         panelStyle="width:180px"
+                                         filter="true" 
+                                         filterMatchMode="startsWith">
                             <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
                             <f:selectItems value="#{artistBean.selectItems}"/>
+                            
+                            <p:column>
+                                <h:graphicImage url="/download/img?type=artist&amp;id=#{t.id}" width="30" height="30"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <h:outputText value="#{t.title}"/>
+                            </p:column>
+                            
                         </p:selectOneMenu>
                         <p:message for="artist"/>
 
                         <p:outputLabel for="singer" value="#{msg['music-singer-label']}"/>
                         <p:selectOneMenu id="singer" 
                                          value="#{musicBean.current.singer}"
-                                         converter="artistConvertor">
+                                         converter="artistConvertor"
+                                         effect="fade" var="t" style="width:160px" panelStyle="width:180px"
+                                         filter="true" filterMatchMode="startsWith">
                             <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
                             <f:selectItems value="#{artistBean.selectItems}"/>
+                            <p:column>
+                                <h:outputText value="#{t.title}"/>
+                            </p:column>
                         </p:selectOneMenu>
                         <p:message for="singer"/>
 

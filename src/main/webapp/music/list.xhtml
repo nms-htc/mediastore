@@ -46,17 +46,26 @@
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                              rowsPerPageTemplate="10,15,20" 
                              paginatorPosition="bottom"
-                             resizableColumns="true"
+                             resizableColumns="false"
+                             scrollable="true"
                              rowStyleClass="#{index mod 2 == 1 ? 'odd' : null}">
 
                     <p:column headerText="#{msg['common-index-label']}" width="20" toggleable="false">
                         <h:outputText value="#{index + 1}"/>
                     </p:column>
 
-                    <p:column  width="40" toggleable="false">
+                    <!--p:column  width="40" toggleable="false">
                         <h:graphicImage url="/download/img?type=music&amp;id=#{music.id}" width="30" height="30"/>
+                    </p:column-->
+
+                    <p:column headerText="#{msg['common-title-label']}"
+                              filterBy="#{music.title}"
+                              sortBy="#{music.title}"
+                              filterStyle="width: 90%;">
+                        <h:outputText value="#{music.title}"/>
                     </p:column>
-                    
+
+
                     <p:column headerText="#{msg['music-hot-label']}"
                               sortBy="#{music.hot}"
                               width="30"
@@ -68,11 +77,30 @@
                                         width="25"/>
                     </p:column>
 
-                    <p:column headerText="#{msg['common-title-label']}" 
-                              filterBy="#{music.title}" 
-                              sortBy="#{music.title}"
+                    <p:column headerText="#{msg['music-hot-label']}"
+                              sortBy="#{music.hot}"
+                              width="30"
                               filterStyle="width: 90%;">
-                        <h:outputText value="#{music.title}"/>
+                        <h:graphicImage library="image" 
+                                        name="hot.png" 
+                                        rendered="#{music.hot}"
+                                        height="25"
+                                        width="25"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['default']}" 
+                              sortBy="#{music.defaultMusic}"
+                              width="3s0"
+                              filterStyle="width: 90%;">
+                        <h:outputText value="#{music.defaultMusic}" rendered="#{music.defaultMusic != null}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['common-modified-date-label']}"
+                              sortBy="#{music.modifiedDate}"
+                              filterStyle="width: 90%;">
+                        <h:outputText value="#{music.modifiedDate}">
+                            <f:convertDateTime pattern="dd/MM/yyyy hh:mm"/>
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="#{msg['music-writer-label']}" 
@@ -117,26 +145,37 @@
                         </ui:repeat>
                     </p:column>
 
-                    <p:column style="width: 90px" toggleable="false" >
+                    <p:column style="width: 130px" toggleable="false">
                         <p:commandButton icon="ui-icon-search" 
                                          update=":viewDl" 
                                          immediate="true"
+                                         title="View detail"
                                          actionListener="#{musicBean.prepareEntity(music)}"
                                          oncomplete="PF('viewDl').show();"/>
 
                         <p:commandButton icon="ui-icon-pencil" 
                                          update=":editDl" 
                                          immediate="true"
+                                         title="Edit"
                                          actionListener="#{musicBean.prepareEntity(music)}"
                                          oncomplete="PF('editDl').show();"/>
-
+                        <p:commandButton icon="ui-icon-circle-check"
+                                         actionListener="#{musicBean.setDefault(music)}"
+                                         immediate="true"
+                                         title="Set Default music"
+                                         update="@form :growl">
+                            <p:confirm header="Confirmation"
+                                       message="#{msg['music-action-default-confirm-msg']}" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
 
                         <p:commandButton icon="ui-icon-trash" 
                                          actionListener="#{musicBean.remove(music)}"
                                          immediate="true"
+                                         title="Delete Music"
                                          update="@form :growl">
                             <p:confirm header="Confirmation"
-                                       message="#{msg['artist-action-delete-confirm-msg']}" 
+                                       message="#{msg['music-action-delete-confirm-msg']}" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                     </p:column>

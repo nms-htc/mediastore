@@ -12,11 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "MS_MUSIC")
+@NamedQueries({
+    @NamedQuery(name = "Music.getDefault", query = "SELECT m FROM Music m ORDER BY m.defaultMusic DESC")
+})
 @XmlRootElement
 public class Music extends ThumbnailEntity {
 
@@ -24,6 +29,9 @@ public class Music extends ThumbnailEntity {
 
     @Column(name = "ISHOT")
     protected Boolean hot;
+    
+    @Column(name = "ISDEFAULT")
+    protected Boolean defaultMusic;
 
     @ManyToOne
     @JoinColumn(name = "ARTISTID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -99,5 +107,13 @@ public class Music extends ThumbnailEntity {
 
     public void setMusicFile(FileEntry musicFile) {
         this.musicFile = musicFile;
+    }
+
+    public Boolean getDefaultMusic() {
+        return defaultMusic;
+    }
+
+    public void setDefaultMusic(Boolean defaultMusic) {
+        this.defaultMusic = defaultMusic;
     }
 }

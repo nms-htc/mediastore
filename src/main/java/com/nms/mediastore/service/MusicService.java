@@ -6,5 +6,9 @@ import java.util.List;
 public interface MusicService extends BaseService<Music> {
     
     public List<Music> getHotMusic(int count);
-
+    
+    public void setDefault(Music music);
+    
+    public Music getDefault();
+    
 }

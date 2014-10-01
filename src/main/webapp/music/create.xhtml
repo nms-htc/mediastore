@@ -30,7 +30,7 @@
                 </h:form>
             </p:panel>
             <p:spacer height="5px"/>
-            
+
             <p:panel header="#{msg['music-panel-music-upload-label']}">
                 <h:form>
                     <p:fileUpload id="thumbnail" 
@@ -42,40 +42,54 @@
                                   allowTypes="/(\.|\/)(mp3)$/"/>
                 </h:form>
             </p:panel>
-            
+
             <p:spacer height="5px"/>
-            
+
             <p:panel header="#{msg['music-panel-detail-label']}">
                 <h:form id="createForm">
                     <p:panelGrid columns="3" style="width: 100%" columnClasses="form-label-column">
-                        
+
                         <p:outputLabel for="title" value="#{msg['common-title-label']}"/>
                         <p:inputText id="title" value="#{musicBean.current.title}" size="35"
                                      required="true" requiredMessage="#{msg['common-title-required-message']}"/>
                         <p:message for="title"/>
-                        
+
                         <p:outputLabel for="hot" value="#{msg['music-hot-label']}"/>
                         <p:selectBooleanCheckbox id="hot" value="#{musicBean.current.hot}"/>
                         <p:message for="hot"/>
-                        
+
                         <p:outputLabel for="artist" value="#{msg['music-writer-label']}"/>
                         <p:selectOneMenu id="artist" 
                                          value="#{musicBean.current.writer}"
-                                         converter="artistConvertor">
+                                         converter="artistConvertor"
+                                         effect="fade" var="t" style="width:160px" 
+                                         panelStyle="width:180px"
+                                         filter="true" 
+                                         filterMatchMode="contains">
                             <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
                             <f:selectItems value="#{artistBean.selectItems}"/>
+                            
+                            <p:column>
+                                <h:outputText value="#{t.title}"/>
+                            </p:column>
+                            
                         </p:selectOneMenu>
                         <p:message for="artist"/>
-                        
+
                         <p:outputLabel for="singer" value="#{msg['music-singer-label']}"/>
                         <p:selectOneMenu id="singer" 
                                          value="#{musicBean.current.singer}"
-                                         converter="artistConvertor">
+                                         converter="artistConvertor"
+                                         effect="fade" var="t" style="width:160px" panelStyle="width:180px"
+                                         filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
                             <f:selectItems value="#{artistBean.selectItems}"/>
+                            <p:column>
+                                <h:outputText value="#{t.title}"/>
+                            </p:column>
                         </p:selectOneMenu>
                         <p:message for="singer"/>
-                        
+
                         <p:outputLabel for="topics" value="#{msg['music-topics-label']}"/>
                         <p:selectCheckboxMenu id="topics" 
                                               label="#{msg['music-topics-label']}"
@@ -88,7 +102,7 @@
                         <p:outputLabel for="description" value="#{msg['common-description-label']}"/>
                         <p:inputTextarea id="description" cols="37" rows="3" value="#{musicBean.current.description}"/>
                         <p:message for="description"/>
-                        
+
                         <f:facet name="footer">
                             <p:commandButton value="#{msg['save']}"
                                              actionListener="#{musicBean.persist()}"

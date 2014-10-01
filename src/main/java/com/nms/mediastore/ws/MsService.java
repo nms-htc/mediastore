@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nms.mediastore.ejb.ws;
+package com.nms.mediastore.ws;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -17,5 +17,10 @@ import javax.jws.WebService;
 public interface MsService {
 
     @WebMethod
-    public String[] getHotMusicLink(@WebParam(name = "count") int count, @WebParam(name = "expireTime") int expireTime, @WebParam(name = "timeUnit") int timeUnit) throws Exception;
+    public String[] getHotMusicLink(@WebParam(name = "count") int count, 
+            @WebParam(name = "expireTime") int expireTime, 
+            @WebParam(name = "timeUnit") int timeUnit) throws Exception;
+    
+    public String getDefaultMusicLink();
+    
 }

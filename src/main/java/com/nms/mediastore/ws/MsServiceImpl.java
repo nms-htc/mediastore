@@ -1,4 +1,4 @@
-package com.nms.mediastore.ejb.ws;
+package com.nms.mediastore.ws;
 
 import com.nms.mediastore.entity.Music;
 import com.nms.mediastore.entity.MusicLink;
@@ -66,7 +66,7 @@ public class MsServiceImpl implements MsService {
                     musicLink.setExpireDate(expireDate.getTime());
                     musicLinkService.persist(musicLink);
                     String uuid = musicLink.getUuid();
-                    links[i] = servletContext.getContextPath() + "/download/music/id=" + uuid;
+                    links[i] = servletContext.getContextPath() + "/download/music?id=" + uuid;
                 }
             } catch (Exception e) {
                 throw new Exception("Error when when create music link" + count, e);
@@ -74,6 +74,14 @@ public class MsServiceImpl implements MsService {
 
         }
         return links;
+    }
+
+    @Override
+    public String getDefaultMusicLink() {
+        ServletContext servletContext = (ServletContext) context
+                    .getMessageContext().get(MessageContext.SERVLET_CONTEXT);
+        
+        return servletContext.getContextPath() + "/download/music?id=default";
     }
 
 }

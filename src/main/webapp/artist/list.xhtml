@@ -13,6 +13,7 @@
             <ui:include src="create.xhtml"/>
             <ui:include src="edit.xhtml"/>
             <ui:include src="view.xhtml"/>
+            <ui:include src="create_batch.xhtml"/>
         </ui:define>
 
         <ui:define name="content">
@@ -28,6 +29,14 @@
                                          update=":createDl"
                                          oncomplete="PF('createDl').show();">
                             <p:resetInput target=":createForm"/>
+                        </p:commandButton>
+                        
+                        <p:commandButton id="addBatchButton" 
+                                         value="#{msg['artist-action-create-batch']}" 
+                                         immediate="true" 
+                                         update=":batchCreateDl"
+                                         oncomplete="PF('batchCreateDl').show();">
+                            <p:resetInput target=":batchCreateForm"/>
                         </p:commandButton>
 
                     </f:facet>

@@ -65,4 +65,13 @@ public class MusicBean extends AbstractThumbnailBean<Music> {
             throw new RuntimeException("music-file-is-required");
         }
     }
+    
+    public void setDefault(Music music) {
+        try {
+            service.setDefault(music);
+            MessageUtil.addGlobalInfoMessage("music-action-set-default-success");
+        } catch (Exception e) {
+            MessageUtil.addGlobalErrorMessage("music-action-set-default-error", e);
+        }
+    }
 }
