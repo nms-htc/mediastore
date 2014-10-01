@@ -2,7 +2,7 @@ package com.nms.mediastore.servlet;
 
 import com.nms.mediastore.service.ArtistService;
 import com.nms.mediastore.service.MusicService;
-import com.nms.mediastore.service.SingerService;
+
 import com.nms.mediastore.service.TopicService;
 import com.nms.mediastore.service.UserService;
 import com.nms.mediastore.util.Validator;
@@ -29,7 +29,6 @@ public class ImageSevlet extends HttpServlet {
     private static final String TOPIC_TYPE = "topic";
     private static final String ARTIST_TYPE = "artist";
     private static final String USER_TYPE = "user";
-    private static final String SINGER_TYPE = "singer";
     private static final String MUSIC_TYPE = "music";
 
     @EJB
@@ -38,8 +37,6 @@ public class ImageSevlet extends HttpServlet {
     private ArtistService artistService;
     @EJB
     private TopicService topicService;
-    @EJB
-    private SingerService singerService;
     @EJB
     private MusicService musicService;
 
@@ -97,9 +94,6 @@ public class ImageSevlet extends HttpServlet {
                 break;
             case TOPIC_TYPE:
                 asyncContext.start(new ImageDownloadTask<>(topicService, id, asyncContext));
-                break;
-            case SINGER_TYPE:
-                asyncContext.start(new ImageDownloadTask<>(singerService, id, asyncContext));
                 break;
             case ARTIST_TYPE:
                 asyncContext.start(new ImageDownloadTask(artistService, id, asyncContext));
