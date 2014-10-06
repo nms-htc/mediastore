@@ -77,22 +77,11 @@
                                         width="25"/>
                     </p:column>
 
-                    <p:column headerText="#{msg['music-hot-label']}"
-                              sortBy="#{music.hot}"
-                              width="30"
-                              filterStyle="width: 90%;">
-                        <h:graphicImage library="image" 
-                                        name="hot.png" 
-                                        rendered="#{music.hot}"
-                                        height="25"
-                                        width="25"/>
-                    </p:column>
-
                     <p:column headerText="#{msg['default']}" 
                               sortBy="#{music.defaultMusic}"
                               width="3s0"
                               filterStyle="width: 90%;">
-                        <h:outputText value="#{music.defaultMusic}" rendered="#{music.defaultMusic != null}"/>
+                        <h:outputText value="#{music.defaultMusic == true ? msg['yes'] : ''}" rendered="#{music.defaultMusic != null}"/>
                     </p:column>
 
                     <p:column headerText="#{msg['common-modified-date-label']}"
@@ -145,7 +134,7 @@
                         </ui:repeat>
                     </p:column>
 
-                    <p:column style="width: 130px" toggleable="false">
+                    <p:column style="width: 140px" toggleable="false">
                         <p:commandButton icon="ui-icon-search" 
                                          update=":viewDl" 
                                          immediate="true"

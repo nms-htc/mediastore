@@ -1,6 +1,7 @@
 package com.nms.mediastore.ejb;
 
 import com.nms.mediastore.entity.BaseEntity;
+import com.nms.mediastore.entity.BaseEntity_;
 import com.nms.mediastore.service.BaseService;
 import com.nms.mediastore.util.Validator;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
 
     @PersistenceContext
     protected EntityManager em;
-    
+
     private final Class<T> entityClass;
 
     public AbstractService(Class<T> entityClass) {
@@ -144,10 +145,10 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
             cq.where(predicates.toArray(new Predicate[]{}));
         }
 
-        Order order = buildOrder(sortField, sortOrder, cb, root);
+        Order[] orders = buildOrder(sortField, sortOrder, cb, root);
 
-        if (order != null) {
-            cq.orderBy(order);
+        if (orders != null && orders.length > 0) {
+            cq.orderBy(orders);
         }
 
         TypedQuery<T> q = em.createQuery(cq);
@@ -175,18 +176,21 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
         return cb.equal(root.get(entry.getKey()), entry.getValue());
     }
 
-    protected Order buildOrder(String sortField, SortOrder sortOrder, CriteriaBuilder cb, Root<T> root) {
-        Order order = null;
+    protected Order[] buildOrder(String sortField, SortOrder sortOrder, CriteriaBuilder cb, Root<T> root) {
+        List<Order> orders = new ArrayList<>();
         if (sortOrder != null && Validator.isNotNull(sortField)) {
             switch (sortOrder) {
                 case ASCENDING:
-                    order = cb.asc(root.get(sortField));
+                    orders.add(cb.asc(root.get(sortField)));
                     break;
                 case DESCENDING:
-                    order = cb.desc(root.get(sortField));
+                    orders.add(cb.desc(root.get(sortField)));
                     break;
             }
+        } else {
+            orders.add(cb.desc(root.get(BaseEntity_.modifiedDate)));
         }
-        return order;
+
+        return orders.toArray(new Order[]{});
     }
 }

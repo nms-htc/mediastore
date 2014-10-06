@@ -13,7 +13,7 @@ import javax.servlet.ServletContext;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
-@WebService(endpointInterface = "com.nms.mediastore.ejb.ws.MsService", serviceName = "MediaService", portName = "MediaServicePort")
+@WebService(endpointInterface = "com.nms.mediastore.ws.MsService", serviceName = "MediaService", portName = "MediaServicePort")
 public class MsServiceImpl implements MsService {
 
     @Resource
@@ -83,5 +83,4 @@ public class MsServiceImpl implements MsService {
         
         return servletContext.getContextPath() + "/download/music?id=default";
     }
-
 }
