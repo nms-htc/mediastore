@@ -12,11 +12,11 @@ import javax.jws.WebService;
 public interface MsService {
 
     @WebMethod
-    public String[] getHotMusicLink(@WebParam(name = "count") int count, 
+    public String[][] getHotMusicLink(@WebParam(name = "count") int count, 
             @WebParam(name = "expireTime") int expireTime, 
             @WebParam(name = "timeUnit") int timeUnit) throws Exception;
     
     @WebMethod
-    public String getDefaultMusicLink();
+    public String[] getDefaultMusicLink();
     
 }
