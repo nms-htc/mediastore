@@ -53,22 +53,12 @@ public class MusicSevlet extends HttpServlet {
                     musicFile = music.getMusicFile();
                 } else {
                     link = musicLinkService.findByUUID(uuid);
+                    musicFile = link.getMusic().getMusicFile();
                 }
             } catch (Exception e) {
                 LOG.log(Level.WARNING, "Music link not found or expirated uuid = {0} and ERROR: {1}", new Object[]{
                     uuid, e.toString()
                 });
-            }
-
-            if (link != null) {
-                try {
-                    musicFile = link.getMusic().getMusicFile();
-                } catch (Exception e) {
-                    LOG.log(Level.WARNING, "Music file not found with uuid = {0} and ERROR: {1}", new Object[]{
-                        uuid, e.toString()
-                    });
-                }
-
             }
 
             if (musicFile != null && Validator.isNotNull(musicFile.getUri())) {

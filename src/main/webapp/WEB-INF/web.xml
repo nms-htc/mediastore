@@ -94,7 +94,7 @@
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>msRealm</realm-name>
+        <realm-name>mediaStoreRealm</realm-name>
         <form-login-config>
             <form-login-page>/login.xhtml</form-login-page>
             <form-error-page>/login.xhtml</form-error-page>

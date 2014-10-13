@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "MS_MUSIC")
 @NamedQueries({
-    @NamedQuery(name = "Music.getDefault", query = "SELECT m FROM Music m ORDER BY m.defaultMusic DESC")
+    @NamedQuery(name = "Music.getDefault", query = "SELECT m FROM Music m WHERE m.defaultMusic = TRUE")
 })
 @XmlRootElement
 public class Music extends ThumbnailEntity {
