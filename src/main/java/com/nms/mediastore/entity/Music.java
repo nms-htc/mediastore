@@ -1,5 +1,6 @@
 package com.nms.mediastore.entity;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -15,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -57,6 +61,10 @@ public class Music extends ThumbnailEntity {
         @AttributeOverride(name = "fileSize", column = @Column(name = "MUSIC_FILESIZE"))
     })
     protected FileEntry musicFile;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "PUBLISHDATE")
+    protected Date publishDate = new Date();
 
     public Music() {
     }
@@ -115,5 +123,13 @@ public class Music extends ThumbnailEntity {
 
     public void setDefaultMusic(Boolean defaultMusic) {
         this.defaultMusic = defaultMusic;
+    }
+
+    public Date getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
     }
 }

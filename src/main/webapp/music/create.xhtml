@@ -57,6 +57,10 @@
                         <p:outputLabel for="hot" value="#{msg['music-hot-label']}"/>
                         <p:selectBooleanCheckbox id="hot" value="#{musicBean.current.hot}"/>
                         <p:message for="hot"/>
+                        
+                        <p:outputLabel for="publishDate" value="Publish Date:"/>
+                        <p:calendar id="publishDate" value="#{musicBean.current.publishDate}" showOn="button" pattern="dd/MM/yyyy"/>
+                        <p:message for="publishDate"/>
 
                         <p:outputLabel for="artist" value="#{msg['music-writer-label']}"/>
                         <p:selectOneMenu id="artist" 

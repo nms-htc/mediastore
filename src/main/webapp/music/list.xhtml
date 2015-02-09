@@ -133,6 +133,12 @@
                             <h:outputText value=", " rendered="#{!vs.last}"/>
                         </ui:repeat>
                     </p:column>
+                    
+                    <p:column headerText="Publish Date">
+                        <h:outputLabel value="#{music.publishDate}" rendered="#{music.publishDate != null}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputLabel>
+                    </p:column>
 
                     <p:column style="width: 140px" toggleable="false">
                         <p:commandButton icon="ui-icon-search" 

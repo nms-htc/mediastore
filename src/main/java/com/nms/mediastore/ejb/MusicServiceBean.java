@@ -7,6 +7,7 @@ import com.nms.mediastore.entity.Music_;
 import com.nms.mediastore.entity.ThumbnailEntity_;
 import java.util.logging.Logger;
 import com.nms.mediastore.util.AppConfig;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
@@ -67,6 +68,8 @@ public class MusicServiceBean extends AbstractThumbnailService<Music> implements
         CriteriaQuery<Music> cq = cb.createQuery(Music.class);
         Root<Music> root = cq.from(Music.class);
         cq.select(root);
+        
+        cq.where(cb.lessThanOrEqualTo(root.get(Music_.publishDate), new Date()));
 
         cq.orderBy(new Order[]{
             cb.desc(root.get(Music_.hot)),
