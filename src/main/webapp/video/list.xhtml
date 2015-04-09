@@ -78,10 +78,10 @@
                     </p:column>
 
                     <p:column headerText="#{msg['default']}" 
-                              sortBy="#{video.defaultMusic}"
+                              sortBy="#{video.defaultVideo}"
                               width="3s0"
                               filterStyle="width: 90%;">
-                        <h:outputText value="#{video.defaultMusic == true ? msg['yes'] : ''}" rendered="#{video.defaultMusic != null}"/>
+                        <h:outputText value="#{video.defaultVideo == true ? msg['yes'] : ''}" rendered="#{video.defaultVideo != null}"/>
                     </p:column>
 
                     <p:column headerText="#{msg['common-modified-date-label']}"

@@ -15,7 +15,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author richard
  */
-@FacesConverter(forClass = VideoCategory.class, value = "videoConverter")
+@FacesConverter(forClass = VideoCategory.class, value = "videoCategoryConverter")
 public class VideoCategoryConverter extends AbstractEntityConvertor<VideoCategory> {
 
     @EJB

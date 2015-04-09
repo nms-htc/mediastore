@@ -24,6 +24,14 @@
                     </ul>
                 </li>
             </c:if>
+            <c:if test="#{request.isUserInRole('Administrator') or request.isUserInRole('Cp')}">
+                <li class="has-sub #{current == 'video' ? 'active' : null} #{request.isUserInRole('Administrator') ? null : 'last'}"><a href='javascript:void(0);'><span>#{msg['video']}</span></a>
+                    <ul>
+                        <li><h:link outcome="/video/list"><span>#{msg['video']}</span></h:link></li>
+                        <li class="last"><h:link outcome="/video_cat/list"><span>#{msg['video-category-menu']}</span></h:link></li>
+                    </ul>
+                </li>
+            </c:if>
             <c:if test="#{request.isUserInRole('Administrator')}">
                 <li class="last #{current == 'user' ? 'active' : null}"><h:link outcome="/user/list"><span>#{msg['user-manager']}</span></h:link></li>
             </c:if>

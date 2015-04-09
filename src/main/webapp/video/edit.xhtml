@@ -39,8 +39,7 @@
                                   mode="advanced" 
                                   dragDropSupport="true"
                                   update=":editMessages :growl" 
-                                  sizeLimit="10487560" 
-                                  allowTypes="/(\.|\/)(mp3)$/"/>
+                                  allowTypes="/(\.|\/)[mp4|3gp]$/"/>
                 </h:form>
             </p:panel>
 
@@ -63,51 +62,12 @@
                         <p:outputLabel for="publishDate" value="Publish Date:"/>
                         <p:calendar id="publishDate" value="#{videoBean.current.publishDate}" showOn="button" pattern="dd/MM/yyyy"/>
                         <p:message for="publishDate"/>
-
-                        <p:outputLabel for="artist" value="#{msg['video-writer-label']}"/>
-                        <p:selectOneMenu id="artist" 
-                                         value="#{videoBean.current.writer}"
-                                         converter="artistConvertor"
-                                         effect="fade" var="t" style="width:160px" 
-                                         panelStyle="width:180px"
-                                         filter="true" 
-                                         filterMatchMode="startsWith">
-                            <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
-                            <f:selectItems value="#{artistBean.selectItems}"/>
-                            
-                            <p:column>
-                                <h:graphicImage url="/download/img?type=artist&amp;id=#{t.id}" width="30" height="30"/>
-                            </p:column>
-                            
-                            <p:column>
-                                <h:outputText value="#{t.title}"/>
-                            </p:column>
-                            
+                        
+                        <p:outputLabel for="category" value="#{msg['video-category']}"/>
+                        <p:selectOneMenu id="category" value="#{videoBean.current.category}"
+                                         converter="videoCategoryConverter">
+                            <f:selectItems value="#{videoCategoryBean.selectItems}"/>
                         </p:selectOneMenu>
-                        <p:message for="artist"/>
-
-                        <p:outputLabel for="singer" value="#{msg['video-singer-label']}"/>
-                        <p:selectOneMenu id="singer" 
-                                         value="#{videoBean.current.singer}"
-                                         converter="artistConvertor"
-                                         effect="fade" var="t" style="width:160px" panelStyle="width:180px"
-                                         filter="true" filterMatchMode="startsWith">
-                            <f:selectItem itemLabel="#{msg['common-dummy-select-label']}" noSelectionOption="true"/>
-                            <f:selectItems value="#{artistBean.selectItems}"/>
-                            <p:column>
-                                <h:outputText value="#{t.title}"/>
-                            </p:column>
-                        </p:selectOneMenu>
-                        <p:message for="singer"/>
-
-                        <p:outputLabel for="topics" value="#{msg['video-topics-label']}"/>
-                        <p:selectCheckboxMenu id="topics" 
-                                              label="#{msg['video-topics-label']}"
-                                              value="#{videoBean.current.topics}"
-                                              converter="topicConvertor">
-                            <f:selectItems value="#{topicBean.selectItems}"/>
-                        </p:selectCheckboxMenu>
-                        <p:message for="topics"/>
 
                         <p:outputLabel for="description" value="#{msg['common-description-label']}"/>
                         <p:inputTextarea id="description" cols="37" rows="3" value="#{videoBean.current.description}"/>

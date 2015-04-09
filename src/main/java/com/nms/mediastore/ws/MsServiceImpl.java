@@ -91,8 +91,11 @@ public class MsServiceImpl implements MsService {
         ServletContext servletContext = (ServletContext) context
                     .getMessageContext().get(MessageContext.SERVLET_CONTEXT);
         Video defaultVideo = videoService.getDefault();
-        result[0] = defaultVideo.getTitle();
-        result[1] = servletContext.getContextPath() + "/download/video?id=default";
+        if (defaultVideo != null) {
+            result[0] = defaultVideo.getTitle();
+            result[1] = servletContext.getContextPath() + "/download/video?id=default";
+        }
+        
         return result;
     }
 
