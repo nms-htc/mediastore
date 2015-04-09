@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/temp/template.xhtml">
+
+        <ui:param name="current" value="video"/>
+
+        <ui:define name="topbody">
+            <ui:include src="create.xhtml"/>
+            <ui:include src="edit.xhtml"/>
+            <ui:include src="view.xhtml"/>
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h:form id="listForm">
+                <p:messages globalOnly="true"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="addButton" 
+                                         value="#{msg['video-action-create']}" 
+                                         immediate="true" 
+                                         actionListener="#{videoBean.resetEntity()}"
+                                         update=":createDl"
+                                         oncomplete="PF('createDl').show();">
+                            <p:resetInput target=":createForm"/>
+                        </p:commandButton>
+
+                    </f:facet>
+                </p:toolbar>
+
+                <p:spacer height="10"/>
+
+                <p:dataTable id="listTable"
+                             widgetVar="listTable"
+                             value="#{videoBean.model}"
+                             var="video"
+                             rowIndexVar="index"
+                             lazy="true"
+                             paginator="true"
+                             rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="10,15,20" 
+                             paginatorPosition="bottom"
+                             resizableColumns="false"
+                             scrollable="true"
+                             rowStyleClass="#{index mod 2 == 1 ? 'odd' : null}">
+
+                    <p:column headerText="#{msg['common-index-label']}" width="20" toggleable="false">
+                        <h:outputText value="#{index + 1}"/>
+                    </p:column>
+
+                    <!--p:column  width="40" toggleable="false">
+                        <h:graphicImage url="/download/img?type=video&amp;id=#{video.id}" width="30" height="30"/>
+                    </p:column-->
+
+                    <p:column headerText="#{msg['common-title-label']}"
+                              filterBy="#{video.title}"
+                              sortBy="#{video.title}"
+                              filterStyle="width: 90%;">
+                        <h:outputText value="#{video.title}"/>
+                    </p:column>
+
+
+                    <p:column headerText="#{msg['video-hot-label']}"
+                              sortBy="#{video.hot}"
+                              width="30"
+                              filterStyle="width: 90%;">
+                        <h:graphicImage library="image" 
+                                        name="hot.png" 
+                                        rendered="#{video.hot}"
+                                        height="25"
+                                        width="25"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['default']}" 
+                              sortBy="#{video.defaultMusic}"
+                              width="3s0"
+                              filterStyle="width: 90%;">
+                        <h:outputText value="#{video.defaultMusic == true ? msg['yes'] : ''}" rendered="#{video.defaultMusic != null}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['common-modified-date-label']}"
+                              sortBy="#{video.modifiedDate}"
+                              filterStyle="width: 90%;">
+                        <h:outputText value="#{video.modifiedDate}">
+                            <f:convertDateTime pattern="dd/MM/yyyy hh:mm"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Publish Date">
+                        <h:outputLabel value="#{video.publishDate}" rendered="#{video.publishDate != null}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputLabel>
+                    </p:column>
+
+                    <p:column style="width: 140px" toggleable="false">
+                        <p:commandButton icon="ui-icon-search" 
+                                         update=":viewDl" 
+                                         immediate="true"
+                                         title="View detail"
+                                         actionListener="#{videoBean.prepareEntity(video)}"
+                                         oncomplete="PF('viewDl').show();"/>
+
+                        <p:commandButton icon="ui-icon-pencil" 
+                                         update=":editDl" 
+                                         immediate="true"
+                                         title="Edit"
+                                         actionListener="#{videoBean.prepareEntity(video)}"
+                                         oncomplete="PF('editDl').show();"/>
+                        <p:commandButton icon="ui-icon-circle-check"
+                                         actionListener="#{videoBean.setDefault(video)}"
+                                         immediate="true"
+                                         title="Set Default video"
+                                         update="@form :growl">
+                            <p:confirm header="Confirmation"
+                                       message="#{msg['video-action-default-confirm-msg']}" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-trash" 
+                                         actionListener="#{videoBean.remove(video)}"
+                                         immediate="true"
+                                         title="Delete Music"
+                                         update="@form :growl">
+                            <p:confirm header="Confirmation"
+                                       message="#{msg['video-action-delete-confirm-msg']}" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

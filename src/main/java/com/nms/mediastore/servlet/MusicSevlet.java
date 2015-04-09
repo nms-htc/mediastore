@@ -45,7 +45,7 @@ public class MusicSevlet extends HttpServlet {
             throws ServletException, IOException {
         String uuid = request.getParameter("id");
         if (Validator.isNotNull(uuid)) {
-            MusicLink link = null;
+            MusicLink link;
             FileEntry musicFile = null;
             try {
                 if (uuid.equals(DEFAULT_ID)) {

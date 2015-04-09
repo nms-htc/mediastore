@@ -24,6 +24,7 @@ public class AppConfig implements Serializable {
     public static final String MUSIC_FOLDER = "music";
     public static final String USER_FOLDER = "user";
     public static final String ARTIST_FOLDER = "artist";
+    public static final String VIDEO_FOLDER = "video";
 
     public static Properties props = null;
 

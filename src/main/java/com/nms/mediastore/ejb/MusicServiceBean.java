@@ -1,10 +1,10 @@
 package com.nms.mediastore.ejb;
 
+import com.nms.mediastore.entity.BaseEntity_;
 import com.nms.mediastore.entity.FileEntry;
 import com.nms.mediastore.service.MusicService;
 import com.nms.mediastore.entity.Music;
 import com.nms.mediastore.entity.Music_;
-import com.nms.mediastore.entity.ThumbnailEntity_;
 import java.util.logging.Logger;
 import com.nms.mediastore.util.AppConfig;
 import java.util.Date;
@@ -73,7 +73,7 @@ public class MusicServiceBean extends AbstractThumbnailService<Music> implements
 
         cq.orderBy(new Order[]{
             cb.desc(root.get(Music_.hot)),
-            cb.desc(root.get(ThumbnailEntity_.modifiedDate))
+            cb.desc(root.get(BaseEntity_.modifiedDate))
         });
 
         TypedQuery<Music> q = em.createQuery(cq);

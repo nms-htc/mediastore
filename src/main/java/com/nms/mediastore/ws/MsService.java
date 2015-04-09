@@ -18,5 +18,13 @@ public interface MsService {
     
     @WebMethod
     public String[] getDefaultMusicLink();
+
+    @WebMethod
+    public String[][] getHotVideoLink(@WebParam(name = "count") int count,
+                                      @WebParam(name = "expireTime") int expireTime,
+                                      @WebParam(name = "timeUnit") int timeUnit) throws Exception;
+
+    @WebMethod
+    public String[] getDefaultVideoLink();
     
 }
