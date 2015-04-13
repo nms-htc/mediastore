@@ -90,10 +90,10 @@ public class MsServiceImpl implements MsService {
         String[] result = new String[2];
         ServletContext servletContext = (ServletContext) context
                     .getMessageContext().get(MessageContext.SERVLET_CONTEXT);
-        Video defaultVideo = videoService.getDefault();
-        if (defaultVideo != null) {
-            result[0] = defaultVideo.getTitle();
-            result[1] = servletContext.getContextPath() + "/download/video?id=default";
+        Music defaultMusic = musicService.getDefault();
+        if (defaultMusic != null) {
+            result[0] = defaultMusic.getTitle();
+            result[1] = servletContext.getContextPath() + "/download/music?id=default";
         }
         
         return result;
@@ -155,6 +155,15 @@ public class MsServiceImpl implements MsService {
 
     @Override
     public String[] getDefaultVideoLink() {
-        return new String[0];
+        String[] result = new String[2];
+        ServletContext servletContext = (ServletContext) context
+                    .getMessageContext().get(MessageContext.SERVLET_CONTEXT);
+        Video defaultVideo = videoService.getDefault();
+        if (defaultVideo != null) {
+            result[0] = defaultVideo.getTitle();
+            result[1] = servletContext.getContextPath() + "/download/video?id=default";
+        }
+        
+        return result;
     }
 }
