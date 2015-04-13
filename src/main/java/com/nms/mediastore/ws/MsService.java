@@ -11,20 +11,20 @@ import javax.jws.WebService;
 @WebService(name = "MediaService")
 public interface MsService {
 
-    @WebMethod
+    @WebMethod(operationName = "getHotMusicLink")
     public String[][] getHotMusicLink(@WebParam(name = "count") int count, 
             @WebParam(name = "expireTime") int expireTime, 
             @WebParam(name = "timeUnit") int timeUnit) throws Exception;
     
-    @WebMethod
+    @WebMethod(operationName = "getDefaultMusicLink")
     public String[] getDefaultMusicLink();
 
-    @WebMethod
+    @WebMethod(operationName = "getHotVideoLink")
     public String[][] getHotVideoLink(@WebParam(name = "count") int count,
                                       @WebParam(name = "expireTime") int expireTime,
                                       @WebParam(name = "timeUnit") int timeUnit) throws Exception;
 
-    @WebMethod
+    @WebMethod(operationName = "getDefaultVideoLink")
     public String[] getDefaultVideoLink();
     
 }
